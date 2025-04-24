@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kardex;
+use App\Models\Materia;
 use Illuminate\Http\Request;
 
-class KardexController extends Controller
+class MateriaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kardexs = Kardex::orderBy('ClaveKardex','asc')->paginate(10);
-        return view();
+        $materias = Materia::orderBy('ClaveMateria','asc')->paginate(10);
+        return view('admin.materias.index', compact('materias'));
     }
-
 
     /**
      * Show the form for creating a new resource.

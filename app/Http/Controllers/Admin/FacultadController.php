@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Facultad;
 use Illuminate\Http\Request;
 
 class FacultadController extends Controller
@@ -12,7 +13,8 @@ class FacultadController extends Controller
      */
     public function index()
     {
-        //
+        $facultades = Facultad::orderBy('NombreFacultad','asc')->paginate(10);
+        return view('admin.facultades.index',compact('facultades'));
     }
 
     /**

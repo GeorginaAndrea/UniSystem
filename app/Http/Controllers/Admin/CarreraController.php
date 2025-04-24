@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Carrera;
 use Illuminate\Http\Request;
 
 class CarreraController extends Controller
@@ -12,7 +13,8 @@ class CarreraController extends Controller
      */
     public function index()
     {
-        //
+        $carreras = Carrera::orderBy('Nombre','asc')->paginate(10);
+        return view('admin.carreras.index',compact('carreras'));
     }
 
     /**

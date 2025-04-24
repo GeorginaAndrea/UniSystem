@@ -2,10 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Profesor extends Model
 {
+    use HasFactory;
+
+    protected $table = 'profesor';
+    protected $fillable = [
+        'ClaveProfesor',
+        'ApePaterno',
+        'ApeMaterno',
+        'Nombres',
+        'Email',
+        'Telefono',
+        'ClaveFacultad'
+    ];
+    public $timestamps = false;
+
     public function facultad()
     {
         return $this->belongsTo(Facultad::class, 'ClaveFacultad');

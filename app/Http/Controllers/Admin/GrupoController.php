@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Grupo;
 use Illuminate\Http\Request;
 
 class GrupoController extends Controller
@@ -12,7 +13,8 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        //
+        $grupos = Grupo::orderBy('ClaveGrupo','asc')->paginate(10);
+        return view('admin.grupos.index', compact('grupos'));
     }
 
     /**

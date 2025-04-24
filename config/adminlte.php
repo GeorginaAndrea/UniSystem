@@ -313,7 +313,7 @@ return [
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'buscar',
         ],
         [
             'text' => 'blog',
@@ -321,77 +321,76 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
+            'text' => 'Panel',
+            'route' => 'admin.home',
+            'icon' => 'fas fa-tachometer-alt',
+            
             'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
+            'text' => 'Gestión Académica',
+            //'route' => 'admin.facultades.index',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
             'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url' => '#',
+                            'text' => 'Facultades',
+                            'route' => 'admin.facultades.index',
                         ],
                         [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
+                            'text' => 'Carreras',
+                            'route' => 'admin.carreras.index',
+                            
+                        ],
+                        [
+                            'text' => 'Materias',
+                            'route' => 'admin.materias.index',
+                            
+                        ],
+                        [
+                            'text' => 'Profesores',
+                            'route' => 'admin.profesores.index',
+                            
+                        ],
+                        [
+                            'text' => 'Grupos',
+                            'route' => 'admin.grupos.index',
+                            
                         ],
                     ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
         ],
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text' => 'Gestión Estudiantil',
+            //'route' => 'admin.carreras.index',
+            'icon' => 'fas fa-fw fa-user',
+            'submenu' => [
+                        [
+                            'text' => 'Alumnos',
+                            'route' => 'admin.alumnos.index',
+                        ],
+                        [
+                            'text' => 'Kardex',
+                            //'route' => 'admin.carreras.index',
+                            
+                        ],
+                    ],
         ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+        // ['header' => 'labels'],
+        // [
+        //     'text' => 'important',
+        //     'icon_color' => 'red',
+        //     'url' => '#',
+        // ],
+        // [
+        //     'text' => 'warning',
+        //     'icon_color' => 'yellow',
+        //     'url' => '#',
+        // ],
+        // [
+        //     'text' => 'information',
+        //     'icon_color' => 'cyan',
+        //     'url' => '#',
+        // ],
     ],
 
     /*

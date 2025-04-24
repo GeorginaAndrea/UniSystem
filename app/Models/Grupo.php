@@ -2,10 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Grupo extends Model
 {
+    use HasFactory;
+
+    protected $table = 'grupo';
+    protected $fillable = [
+        'ClaveGrupo',
+        'ClaveCarrera',
+        'ClaveFacultad',
+        'ClaveProfesor'
+    ];
+    public $timestamps = false;
+
     public function carrera()
     {
         return $this->belongsTo(Carrera::class, 'ClaveCarrera');

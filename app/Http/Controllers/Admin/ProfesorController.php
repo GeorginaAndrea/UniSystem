@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profesor;
 use Illuminate\Http\Request;
 
 class ProfesorController extends Controller
@@ -12,7 +13,8 @@ class ProfesorController extends Controller
      */
     public function index()
     {
-        //
+        $profesores = Profesor::orderBy('Nombres','asc')->paginate(10);
+        return view('admin.profesores.index',compact('profesores'));
     }
 
     /**

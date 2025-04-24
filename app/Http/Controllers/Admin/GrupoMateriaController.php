@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GrupoMateria;
 use Illuminate\Http\Request;
 
 class GrupoMateriaController extends Controller
@@ -12,7 +13,8 @@ class GrupoMateriaController extends Controller
      */
     public function index()
     {
-        //
+        $gruposmaterias = GrupoMateria::orderBy('name','asc');
+        return view();
     }
 
     /**

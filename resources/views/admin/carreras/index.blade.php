@@ -1,0 +1,46 @@
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Carreras</h1>
+@stop
+
+@section('content')
+<div class="container">
+    {{-- @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif --}}
+
+    <!-- Tabla -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Clave Carrera</th>
+                <th>Nombre</th>
+                {{-- <th>Editar</th>
+                <th>Eliminar</th> --}}
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($carreras as $carrera)
+                <tr>
+                    <td>{{ $carrera->ClaveCarrera }}</td>
+                    <td>{{ $carrera->Nombre }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@stop
+
+@section('css')
+    {{-- Add here extra stylesheets --}}
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+@stop
+
+@section('js')
+    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+@stop
