@@ -8,6 +8,7 @@ use App\Models\Profesor;
 use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class ProfesorController extends Controller
 {
@@ -35,16 +36,23 @@ class ProfesorController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'ApePaterno' => 'required|string|max:100',
+            'ApeMaterno' => 'required|string|max:100',
+            'Nombres' => 'required|string|max:100',
+            'Email' => 'required|email|max:100',
+            'Telefono' => 'nullable|string|max:15',
+            'ClaveFacultad' => 'required|integer',
+        ]);
         try {
-
-            $validatedData = $request->validate([
-                'ApePaterno' => 'required|string|max:100',
-                'ApeMaterno' => 'required|string|max:100',
-                'Nombres' => 'required|string|max:100',
-                'Email' => 'required|email|max:100',
-                'Telefono' => 'nullable|string|max:15',
-                'ClaveFacultad' => 'required|integer',
+            $user = User::create([
+                'name' => $validatedData['Nombres'] . ' ' . $validatedData['ApePaterno'],
+                'email' => $validatedData['Email'],
+                'password' => bcrypt('contraseñaTemporal123'), // puedes generar o enviar por correo
             ]);
+    
+            // Asignar rol de alumno
+            $user->assignRole('profesor');
 
             $claveProfesor = 'PROF' . strtoupper(Str::random(8));
 

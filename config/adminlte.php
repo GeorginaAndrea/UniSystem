@@ -330,7 +330,8 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'Gestión Académica',
-            //'route' => 'admin.facultades.index',
+            'route' => 'admin.facultades.index',
+            'can' => 'super-admin',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                         [
@@ -357,7 +358,8 @@ return [
         ],
         [
             'text' => 'Administración de usuarios',
-            //'route' => 'admin.carreras.index',
+            'route' => 'admin.carreras.index',
+            // 'can' => ['super-admin', 'admin'],
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                         [
@@ -392,7 +394,7 @@ return [
         [
             'text' => 'Auditoría y Seguridad',
             'icon' => 'fas fa-shield-alt',
-            // 'can' => ['super-admin.home', 'admin.home'],
+            'can' => ['super-admin.home', 'admin.home'],
             'submenu' => [
                 [
                     'text' => 'Historial de Actividades',
@@ -458,7 +460,7 @@ return [
         [
             'text' => 'Mi Historial Académico',
             'icon' => 'fas fa-graduation-cap',
-            // 'can' => 'alumnos.home',
+            'can' => 'alumno.home',
             'submenu' => [
                 [
                     'text' => 'Calificaciones por Materia',

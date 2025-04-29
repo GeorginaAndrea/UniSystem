@@ -8,6 +8,7 @@ use App\Models\Alumno;
 use App\Models\Carrera;
 use App\Models\Facultad;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 
 class AlumnoController extends Controller
@@ -62,6 +63,14 @@ class AlumnoController extends Controller
         ]);
 
         try {
+            $user = User::create([
+                'name' => $validatedData['Nombres'] . ' ' . $validatedData['ApePaterno'],
+                'email' => $validatedData['Email'],
+                'password' => bcrypt('contraseñaTemporal123'), // puedes generar o enviar por correo
+            ]);
+    
+            // Asignar rol de alumno
+            $user->assignRole('alumno');
             $claveAlumno = 'ALU' . strtoupper(Str::random(8));
             
             Alumno::create(array_merge(['ClaveAlumno' => $claveAlumno], $validatedData));

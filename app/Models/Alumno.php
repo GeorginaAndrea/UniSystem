@@ -48,5 +48,9 @@ class Alumno extends Model
     {
         return $this->hasMany(Kardex::class, 'ClaveAlumno');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
