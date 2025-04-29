@@ -31,12 +31,16 @@ class FacultadController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'NombreFacultad' => 'required|string|max:100',
+            'Direccion' => 'required|string|max:100',
+        ],
+        [
+            'NombreFacultad.unique' => 'El nombre ya esta registrado',
+        ]);
             
         try {
-            $validatedData = $request->validate([
-                'NombreFacultad' => 'required|string|max:100',
-                'Direccion' => 'required|string|max:100',
-            ]);
+            
 
             $ultimoClave = Facultad::max('ClaveFacultad');
             $nuevaClaveFacultad = $ultimoClave ? $ultimoClave + 1 : 1;
@@ -74,26 +78,39 @@ class FacultadController extends Controller
      */
     public function update(Request $request, Facultad $facultad)
     {
+        $validatedData = $request->validate([
+            'Nombre'=> 'sometimes|string|max:100',
+            'Direccion' =>'sometimes|string|max:100'
+        ],
+        [
+            'Nombre' => 'Este nombre de carrera ya esta registrado'
+        ]);
         try {
-            $validatedData = $request->validate([
-                'Nombre'=> 'sometimes|string|max:100',
-                'Direccion' =>'sometimes|string|max:100'
-            ]);
-        } catch (\Throwable $th) {
+            $facultad->update($validatedData);
+            return redirect()->route('admin.facultades.show', $facultad);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Error al  actualizar: ', $e->getMessage())
+                ->withInput();
             //throw $th;
         }
+        // try {
+            
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+        // }
 
-        $facultad = Facultad::findOrFail($facultad);
+        // $facultad = Facultad::findOrFail($facultad);
 
-        try {
-            $facultad->Nombre =$request->Nombre;
-            $facultad->Direccion =$request->Direccion;
+        // try {
+        //     $facultad->Nombre =$request->Nombre;
+        //     $facultad->Direccion =$request->Direccion;
 
-            $facultad->save();
-            return redirect("/facultades/{$facultad->ClaveFacultad}")->with('success', 'Datos actualizados exitosamente.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error' , 'Ocurrio un error al actualizar los datos: ' . $e->getMessage());
-        }
+        //     $facultad->save();
+        //     return redirect("/facultades/{$facultad->ClaveFacultad}")->with('success', 'Datos actualizados exitosamente.');
+        // } catch (\Exception $e) {
+        //     return redirect()->back()->with('error' , 'Ocurrio un error al actualizar los datos: ' . $e->getMessage());
+        // }
     }
 
     /**

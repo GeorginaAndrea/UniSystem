@@ -30,8 +30,8 @@
                             <td>{{ $alumno->ApePaterno }}</td>
                             <td>{{ $alumno->Nombres }}</td>
                             <td>{{ $alumno->Email }}</td>
-                            <td>{{ $alumno->ClaveFacultad }}</td>
-                            <td>{{ $alumno->ClaveCarrera }}</td>
+                            <td>{{ $alumno->facultad->NombreFacultad ?? 'N/A' }}</td>
+                            <td>{{ $alumno->carrera->Nombre ?? 'N/A' }}</td>
                             <td> <a  class="btn btn-primary btn-sm" href="{{route('admin.alumnos.edit', $alumno->ClaveAlumno)}}">
                                 Editar
                                 </a>
@@ -42,7 +42,9 @@
             </table>
         </div>
     </div>
-    
+    <div class="mt-4">
+        {{ $alumnos->links() }}
+    </div>
 @stop
 
 @section('css')

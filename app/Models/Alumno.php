@@ -27,19 +27,21 @@ class Alumno extends Model
         'Telefono',
         'Celular',
         'Email',
-        'FechaNacimiento'
+        'FechaNacimiento',
+        'ClaveFacultad', // Asegúrate de incluir estos campos
+        'ClaveCarrera' 
     ];
     public $incrementing = false;
-    
+    public $timestamps = false;
 
     public function facultad()
     {
-        return $this->belongsTo(Facultad::class, 'ClaveFacultad');
+        return $this->belongsTo(Facultad::class, 'ClaveFacultad','ClaveFacultad' );
     }
 
     public function carrera()
     {
-        return $this->belongsTo(Carrera::class, 'ClaveCarrera');
+        return $this->belongsTo(Carrera::class, 'ClaveCarrera', 'ClaveCarrera');
     }
 
     public function kardex()

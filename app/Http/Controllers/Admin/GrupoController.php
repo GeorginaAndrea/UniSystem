@@ -24,8 +24,8 @@ class GrupoController extends Controller
      */
     public function create()
     {
-        $carreras = Carrera::all();
-        $facultades = Facultad::all();
+        $carreras = Carrera::pluck('ClaveCarrera', 'Nombre');
+        $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
         return view('admin.grupos.create', compact('carreras','facultades'));
     }
 
@@ -34,13 +34,17 @@ class GrupoController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'Nombre' => 'required|string|max:2', // Limitar nombre del grupo a dos caracteres
+            'Semestre' => 'required|integer|min:1|max:12', // Semestre de 1 a 12
+            'ClaveCarrera' => 'required|integer|exists:carrera,ClaveCarrera', // Asegurar que la clave de la carrera exista
+            'ClaveFacultad' => 'required|integer|exists:facultad,ClaveFacultad', // Asegurar que la clave de la facultad exista
+        ],
+        [
+            'Nombre.unique' => 'Este nombre ya esta siendo utilizado'
+        ]);
         try {
-            $validatedData = $request->validate([
-                'Nombre' => 'required|string|max:2', // Limitar nombre del grupo a dos caracteres
-                'Semestre' => 'required|integer|min:1|max:12', // Semestre de 1 a 12
-                'ClaveCarrera' => 'required|integer|exists:carrera,ClaveCarrera', // Asegurar que la clave de la carrera exista
-                'ClaveFacultad' => 'required|integer|exists:facultad,ClaveFacultad', // Asegurar que la clave de la facultad exista
-            ]);
+            
     
             $ultimoClave = Grupo::max('ClaveGrupo');
             $nuevaClaveGrupo = $ultimoClave ? $ultimoClave + 1 : 1;
@@ -55,7 +59,8 @@ class GrupoController extends Controller
     
             return redirect()->route('admin.grupos.index')->with('success', 'Grupo creado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage())
+                ->withInput();
         }
     }
 
@@ -64,7 +69,9 @@ class GrupoController extends Controller
      */
     public function show(Grupo $grupo)
     {
-        return view('admin.grupos.show', compact('grupo'));
+        $carreras = Carrera::pluck('Nombre', 'ClaveCarrera');
+        $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
+        return view('admin.grupos.show', compact('grupo', 'carreras', 'facultades'));
     }
 
     /**
@@ -80,14 +87,15 @@ class GrupoController extends Controller
      */
     public function update(Request $request, Grupo $grupo)
     {
-        try {
-            $validatedData =$request->validate([
-                'Nombre' => 'sometimes|string|max:2',
-                'Semestre' => 'sometimes|int|max:2'
-            ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        $validatedData =$request->validate([
+            'Nombre' => 'sometimes|string|max:2',
+            'Semestre' => 'sometimes|int|max:2'
+        ]);
+
+        $grupo-> update($validatedData);
+
+        return redirect()->route('admin.grupos.show',$grupo)->with('success','Datos  actualizados exitosamente.' );
+        
     }
 
     /**

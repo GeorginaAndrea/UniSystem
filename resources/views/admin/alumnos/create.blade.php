@@ -8,6 +8,23 @@
 @stop
 
 @section('content')
+  @if(session('error'))
+  <div class="alert alert-danger alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Error:</strong> {{ session('error') }}
+  </div>
+  @endif
+
+  @if($errors->any())
+  <div class="alert alert-danger alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <ul>
+          @foreach($errors->all() as $error)
+          <li>{{ $error }}</li>
+          @endforeach
+      </ul>
+  </div>
+  @endif
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Registrar Alumno</h3>
@@ -123,7 +140,9 @@
             <select name="ClaveFacultad" class="form-control">
                 <option value="">Seleccione una facultad</option>
                 @foreach ($facultades as $clave => $nombre)
-                <option value="{{ $clave }}">{{ $nombre }}</option>
+                <option value="{{ $clave }}" {{ old('ClaveFacultad') == $clave ? 'selected' : '' }}>
+                  {{ $nombre }}
+                </option>
                 @endforeach
             </select>
             </div>
@@ -135,7 +154,9 @@
             <select name="ClaveCarrera" class="form-control">
                 <option value="">Seleccione una carrera</option>
                 @foreach ($carreras as $nombre => $clave)
-                    <option value="{{ $clave }}">{{ $nombre }}</option>
+                <option value="{{ $clave }}" {{ old('ClaveCarrera') == $clave ? 'selected' : '' }}>
+                  {{ $nombre }}
+                </option>
                 @endforeach
             </select>
             </div>

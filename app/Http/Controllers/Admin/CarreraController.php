@@ -31,22 +31,27 @@ class CarreraController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $validatedData = $request->validate([
-                'Nombre' => 'required|string|max:50',
+        $validatedData = $request->validate([
+            'Nombre' => 'required|string|max:50|unique:carrera,Nombre',
+                ]
+            ,
+            [
+                'Nombre.unique' => 'Esta carrera ya está registrada'
             ]);
+        try {
+            
     
             $ultimoClave = Carrera::max('ClaveCarrera');
             $nuevaClaveCarrera = $ultimoClave ? $ultimoClave + 1 : 1;
     
             Carrera::create([
                 'ClaveCarrera' => $nuevaClaveCarrera,
-                'Nombre' => $request->Nombre,
+                'Nombre' => $validatedData['Nombre'],
             ]);
     
             return redirect()->route('admin.carreras.index')->with('success', 'Carrera creada exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage())->withInput();
         }
         
     }
@@ -64,7 +69,7 @@ class CarreraController extends Controller
      */
     public function edit(Carrera $carrera)
     {
-        return view('admin.carreras.show', compact('carrera'));
+        return view('admin.carreras.edit', compact('carrera'));
     }
 
     /**
@@ -72,24 +77,23 @@ class CarreraController extends Controller
      */
     public function update(Request $request, Carrera $carrera)
     {
-        try {
-            $validatedData = $request->validate([
-                'Nombre' => 'sometimes|string|max:100'
+
+        $validatedData = $request->validate([
+            'Nombre' => 'sometimes|string|max:50|unique:carrera,Nombre,'.$carrera->ClaveCarrera.',ClaveCarrera',
+                ],
+            [   
+                'Nombre.unique' => 'Este nombre de carrera ya está en uso'
+
             ]);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-
-        $carrera = Carrera::findOrfail($carrera);
-
-        try {
-            $carrera->Nombre =$request->Nombre;
-
-            $carrera->save();
-            return redirect("/carreras/{$carrera->ClaveCarrera}")->with('success', 'Datos actualizados exitosamente.' );
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ocurrio un error al actualizar los datos:' . $e->getMessage());
-        }
+            try {
+                $carrera->update($validatedData);
+                return redirect()->route('admin.carreras.show', $carrera)
+                       ->with('success', 'Carrera actualizada exitosamente.');
+            } catch (\Exception $e) {
+                return redirect()->back()
+                       ->with('error', 'Error al actualizar: ' . $e->getMessage())
+                       ->withInput();
+            }
     }
 
     /**

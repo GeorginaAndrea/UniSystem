@@ -3,7 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Carreras</h1>
+<a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.carreras.create')}}">Nueva Carrera</a>
+<h1>Listado Carreras</h1>
 @stop
 
 @section('content')
