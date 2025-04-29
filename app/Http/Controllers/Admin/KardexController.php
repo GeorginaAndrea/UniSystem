@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alumno;
+use App\Models\Grupo;
 use App\Models\Kardex;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class KardexController extends Controller
     public function index()
     {
         $kardexs = Kardex::orderBy('ClaveKardex','asc')->paginate(10);
-        return view();
+        return view('admin.kardexs.index');
     }
 
 
@@ -23,7 +25,7 @@ class KardexController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -37,23 +39,25 @@ class KardexController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Kardex $kardex)
     {
-        //
+        $alumnos = Alumno::all();
+        $grupos = Grupo::all();
+        return view('admin.kardexs.show', compact('kardex', 'alumnos', 'grupos'),);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Kardex $kardex)
     {
-        //
+        return view('admin.kardexs.edit', compact('kardex'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Kardex $kardex)
     {
         //
     }
@@ -61,7 +65,7 @@ class KardexController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Kardex $kardex)
     {
         //
     }

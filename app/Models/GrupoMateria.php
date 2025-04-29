@@ -9,12 +9,14 @@ class GrupoMateria extends Model
 {
     use HasFactory;
 
-    protected $table = 'GrupoMateria';
+    protected $table = 'grupomateria';
+    protected $primaryKey = 'ClaveGrupoMateria';
+    public $incrementing = true;
     protected $fillable = [
-        'ClaveGrupoMateria',
         'ClaveGrupo',
         'ClaveMateria',
-        'Periodo'
+        'Periodo',
+        'ClaveProfesor'
     ];
     public $timestamps = false;
 
@@ -26,6 +28,10 @@ class GrupoMateria extends Model
     public function materia()
     {
         return $this->belongsTo(Materia::class, 'ClaveMateria');
+    }
+    public function profesor()
+    {
+        return $this->belongsTo(Profesor::class, 'ClaveProfesor'); // nueva relación
     }
 
     public function kardex()

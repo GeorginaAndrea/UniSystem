@@ -14,7 +14,7 @@ class GrupoMateriaController extends Controller
     public function index()
     {
         $gruposmaterias = GrupoMateria::orderBy('name','asc');
-        return view();
+        return view('admin.gruposmaterias.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class GrupoMateriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.gruposmaterias.create');
     }
 
     /**
@@ -36,23 +36,23 @@ class GrupoMateriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(GrupoMateria $grupo_materia)
     {
-        //
+        return view('admin.gruposmaterias.show', compact('grupo_materia'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(GrupoMateria $grupo_materia)
     {
-        //
+        return view('admin.gruposmaterias.edit', compact('grupo_materia'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, GrupoMateria $grupo_materia)
     {
         //
     }
@@ -60,7 +60,7 @@ class GrupoMateriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(GrupoMateria $grupo_materia)
     {
         //
     }

@@ -10,6 +10,8 @@ class Profesor extends Model
     use HasFactory;
 
     protected $table = 'profesor';
+    protected $keyType = 'string';
+    protected $primaryKey = 'ClaveProfesor';
     protected $fillable = [
         'ClaveProfesor',
         'ApePaterno',
@@ -19,6 +21,7 @@ class Profesor extends Model
         'Telefono',
         'ClaveFacultad'
     ];
+    public $incrementing = false;
     public $timestamps = false;
 
     public function facultad()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Alumno;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alumno;
 use Illuminate\Http\Request;
 
 class KardexController extends Controller
@@ -34,10 +35,15 @@ class KardexController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    // {
+        
+    // }
+    public function show(Alumno $alumno)
     {
-        //
+        return view('alumno.show', compact('alumno'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

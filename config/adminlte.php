@@ -154,7 +154,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -336,20 +336,16 @@ return [
                         [
                             'text' => 'Facultades',
                             'route' => 'admin.facultades.index',
+                            'icon' => 'fas fa-school',
                         ],
                         [
                             'text' => 'Carreras',
                             'route' => 'admin.carreras.index',
-                            
+                            'icon' => 'fas fa-flag',
                         ],
                         [
                             'text' => 'Materias',
                             'route' => 'admin.materias.index',
-                            
-                        ],
-                        [
-                            'text' => 'Profesores',
-                            'route' => 'admin.profesores.index',
                             
                         ],
                         [
@@ -360,13 +356,30 @@ return [
                     ],
         ],
         [
-            'text' => 'Gestión Estudiantil',
+            'text' => 'Administración de usuarios',
             //'route' => 'admin.carreras.index',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                         [
+                            'text' => 'Superadministradores',
+                            // 'route' => 'super-admin.admin.index',
+                            'icon' => 'fas fa-user-shield',
+                        ],
+
+                        [
+                            'text' => 'Administradores',
+                            // 'route' => 'admin.administradores.index',
+                            'icon' => 'fas fa-user-tie',
+                        ],
+                        [
+                            'text' => 'Profesores',
+                            'route' => 'admin.profesores.index',
+                            'icon' => 'fas fa-chalkboard-teacher',
+                        ],
+                        [
                             'text' => 'Alumnos',
                             'route' => 'admin.alumnos.index',
+                            'icon' => 'fas fa-user-graduate',
                         ],
                         [
                             'text' => 'Kardex',
@@ -374,6 +387,90 @@ return [
                             
                         ],
                     ],
+            
+        ],
+        [
+            'text' => 'Auditoría y Seguridad',
+            'icon' => 'fas fa-shield-alt',
+            // 'can' => ['super-admin.home', 'admin.home'],
+            'submenu' => [
+                [
+                    'text' => 'Historial de Actividades',
+                    // 'route' => 'admin.auditoria.historial',
+                    'icon' => 'fas fa-history',
+                    // 'can' => 'super-admin.home'
+                ],
+                [
+                    'text' => 'Dispositivos Registrados',
+                    // 'route' => 'admin.auditoria.dispositivos',
+                    'icon' => 'fas fa-laptop',
+                    // 'can' => 'super-admin.home'
+                ],
+                [
+                    'text' => 'Sesiones Activas',
+                    // 'route' => 'admin.auditoria.sesiones',
+                    'icon' => 'fas fa-user-clock',
+                    // 'can' => 'super-admin.home'
+                ],
+            ],
+        ],
+
+         // Menú para Profesores
+        [
+            'text' => 'Mis Materias',
+            'icon' => 'fas fa-book-open',
+            // 'can' => 'profesor.home',
+            'submenu' => [
+                [
+                    'text' => 'Lista de Materias',
+                    'route' => 'profesor.materias.index',
+                    'icon' => 'fas fa-list'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Alumnos',
+            'icon' => 'fas fa-user-graduate',
+            // 'can' => 'profesor.home',
+            'submenu' => [
+                [
+                    'text' => 'Lista de Alumnos por Grupo',
+                    'route' => 'profesor.alumnos.index',
+                    'icon' => 'fas fa-users'
+                ],
+            ],
+        ],
+
+        
+        // Menú para Alumnos
+        [
+            'text' => 'Mi Información',
+            'icon' => 'fas fa-user',
+            // 'can' => 'alumnos.home',
+            'submenu' => [
+                [
+                    'text' => 'Información Personal',
+                    // 'route' => 'alumnos.show',
+                    'icon' => 'fas fa-id-card'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Mi Historial Académico',
+            'icon' => 'fas fa-graduation-cap',
+            // 'can' => 'alumnos.home',
+            'submenu' => [
+                [
+                    'text' => 'Calificaciones por Materia',
+                    'route' => 'alumno.materias.index',
+                    'icon' => 'fas fa-star'
+                ],
+                [
+                    'text' => 'Kardex Académico',
+                    'route' => 'alumno.kardex.index',
+                    'icon' => 'fas fa-file-certificate'
+                ],
+            ],
         ],
         // ['header' => 'labels'],
         // [

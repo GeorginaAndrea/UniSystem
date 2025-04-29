@@ -10,10 +10,11 @@ class Materia extends Model
     use HasFactory;
 
     protected $table = 'materia';
+    protected $primaryKey = 'ClaveMateria';
+    public $incrementing = true;
     protected $fillable = [
-        'ClaveMateria',
         'Nombre',
-        'Descripcion'
+        'descripcion'
     ];
     public $timestamps = false;
 

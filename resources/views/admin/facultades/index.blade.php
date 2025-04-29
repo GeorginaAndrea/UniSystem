@@ -3,46 +3,39 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+<a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.facultades.create')}}">Nueva Facultad</a>
     <h1>Facultades</h1>
 @stop
 
 @section('content')
-    <div class="container">
-        {{-- @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif --}}
-
-        <!-- Tabla -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Clave</th>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    {{-- <th>Editar</th>
-                    <th>Eliminar</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($facultades as $facultad)
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
                     <tr>
-                        <td>{{ $facultad->ClaveFacultad }}</td>
-                        <td>{{ $facultad->NombreFacultad }}</td>
-                        <td>{{ $facultad->Direccion}}</td>
+                        <th>Clave</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Editar</th>
+                        <th>Ver</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($facultades as $facultad)
+                        <tr>
+                            <td>{{ $facultad->ClaveFacultad }}</td>
+                            <td>{{ $facultad->NombreFacultad }}</td>
+                            <td>{{ $facultad->Direccion}}</td>
+                            {{-- <td> <a  class="btn btn-primary btn-sm" href="{{route('admin.facultades.edit', $facultad->ClaveFacultad)}}">
+                                Editar
+                                </a>
+                            </td> --}}
+                            <td></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @stop
 
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@stop
-
-@section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
-@stop

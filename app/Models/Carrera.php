@@ -10,8 +10,11 @@ class Carrera extends Model
     use HasFactory;
 
     protected $table = 'carrera';
-    protected $fillable = [
-        'ClaveCarrera', 
+    protected $primaryKey = 'ClaveCarrera';
+    public $incrementing = false;
+    protected $keyType = 'int';
+    protected $fillable = [ 
+        'ClaveCarrera',
         'Nombre'
     ];
     public $timestamps = false;

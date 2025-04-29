@@ -22,7 +22,7 @@ class MateriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.materias.create');
     }
 
     /**
@@ -36,23 +36,23 @@ class MateriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Materia $materia)
     {
-        //
+        return view('admin.materias.show', compact('materia'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Materia $materia)
     {
-        //
+        return view('admin.kardexs.edit', compact('materia'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Materia $materia)
     {
         //
     }
@@ -60,7 +60,7 @@ class MateriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Materia $materia)
     {
         //
     }

@@ -7,33 +7,33 @@
 @stop
 
 @section('content')
-<div class="container">
-    {{-- @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    <div  class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Clave Carrera</th>
+                        <th>Nombre</th>
+                        <th>Editar</th>
+                        {{-- <th>Eliminar</th> --}}
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($carreras as $carrera)
+                        <tr>
+                            <td>{{ $carrera->ClaveCarrera }}</td>
+                            <td>{{ $carrera->Nombre }}</td>
+                            <td> <a  class="btn btn-primary btn-sm" href="{{route('admin.carreras.edit', $carrera->ClaveCarrera)}}">
+                                Editar
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    @endif --}}
-
-    <!-- Tabla -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Clave Carrera</th>
-                <th>Nombre</th>
-                {{-- <th>Editar</th>
-                <th>Eliminar</th> --}}
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($carreras as $carrera)
-                <tr>
-                    <td>{{ $carrera->ClaveCarrera }}</td>
-                    <td>{{ $carrera->Nombre }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+    </div>
+   
 @stop
 
 @section('css')

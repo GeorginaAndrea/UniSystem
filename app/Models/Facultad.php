@@ -9,12 +9,18 @@ class Facultad extends Model
 {
     use HasFactory;
 
+     // Si no es autoincremental
+    // protected $keyType = 'string';
     protected $table = 'facultad';
+    protected $primaryKey = 'ClaveFacultad';
+    public $incrementing = false;
+    protected $keyType = 'int';
     protected $fillable = [
         'ClaveFacultad',
         'NombreFacultad',
         'Direccion'
     ];
+
     public $timestamps = false;
 
         public function carreras()

@@ -10,6 +10,8 @@ class Alumno extends Model
     use HasFactory;
 
     protected $table = 'alumno';
+    protected $keyType = 'string';
+    protected $primaryKey = 'ClaveAlumno';
     protected $fillable = [
         'ClaveAlumno',
         'ApePaterno',
@@ -28,7 +30,7 @@ class Alumno extends Model
         'FechaNacimiento'
     ];
     public $incrementing = false;
-    protected $keyType = 'string';
+    
 
     public function facultad()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profesor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Materia;
 use Illuminate\Http\Request;
 
 class MateriaController extends Controller
@@ -12,7 +13,8 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        $materias = Materia::orderBy('Nombre','asc')->paginate(10);
+        return view('profesor.materias.index',compact('materias'));
     }
 
     /**

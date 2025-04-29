@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carrera;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class CarreraController extends Controller
@@ -22,7 +23,7 @@ class CarreraController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.carreras.create');
     }
 
     /**
@@ -30,37 +31,71 @@ class CarreraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'Nombre' => 'required|string|max:50',
+            ]);
+    
+            $ultimoClave = Carrera::max('ClaveCarrera');
+            $nuevaClaveCarrera = $ultimoClave ? $ultimoClave + 1 : 1;
+    
+            Carrera::create([
+                'ClaveCarrera' => $nuevaClaveCarrera,
+                'Nombre' => $request->Nombre,
+            ]);
+    
+            return redirect()->route('admin.carreras.index')->with('success', 'Carrera creada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+        }
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Carrera $carrera)
     {
-        //
+        return view('admin.carreras.show', compact('carrera'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Carrera $carrera)
     {
-        //
+        return view('admin.carreras.show', compact('carrera'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Carrera $carrera)
     {
-        //
+        try {
+            $validatedData = $request->validate([
+                'Nombre' => 'sometimes|string|max:100'
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $carrera = Carrera::findOrfail($carrera);
+
+        try {
+            $carrera->Nombre =$request->Nombre;
+
+            $carrera->save();
+            return redirect("/carreras/{$carrera->ClaveCarrera}")->with('success', 'Datos actualizados exitosamente.' );
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Carrera $carrera)
     {
         //
     }

@@ -3,45 +3,46 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+    <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.alumnos.create')}}">Nuevo Alumno</a>
     <h1>Listado Alumnos</h1>
 @stop
 
 @section('content')
-    <div class="container">
-        {{-- @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif --}}
-
-        <!-- Tabla -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Clave Alumno</th>
-                    <th>Apellidos</th>
-                    <th>Nombres</th>
-                    <th>Email</th>
-                    <th>Facultad</th>
-                    <th>Carrera</th>
-                    {{-- <th>Editar</th>
-                    <th>Eliminar</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($alumnos as $alumno)
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
                     <tr>
-                        <td>{{ $alumno->ClaveAlumno }}</td>
-                        <td>{{ $alumno->ApePaterno }}</td>
-                        <td>{{ $alumno->Nombres }}</td>
-                        <td>{{ $alumno->Email }}</td>
-                        <td>{{ $alumno->ClaveFacultad }}</td>
-                        <td>{{ $alumno->ClaveCarrera }}</td>
+                        <th>Clave Alumno</th>
+                        <th>Apellidos</th>
+                        <th>Nombres</th>
+                        <th>Email</th>
+                        <th>Facultad</th>
+                        <th>Carrera</th>
+                        <th>Editar</th>
+                        {{-- <th>Eliminar</th> --}}
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($alumnos as $alumno)
+                        <tr>
+                            <td>{{ $alumno->ClaveAlumno }}</td>
+                            <td>{{ $alumno->ApePaterno }}</td>
+                            <td>{{ $alumno->Nombres }}</td>
+                            <td>{{ $alumno->Email }}</td>
+                            <td>{{ $alumno->ClaveFacultad }}</td>
+                            <td>{{ $alumno->ClaveCarrera }}</td>
+                            <td> <a  class="btn btn-primary btn-sm" href="{{route('admin.alumnos.edit', $alumno->ClaveAlumno)}}">
+                                Editar
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+    
 @stop
 
 @section('css')

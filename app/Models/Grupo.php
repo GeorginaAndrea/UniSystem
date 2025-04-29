@@ -10,11 +10,16 @@ class Grupo extends Model
     use HasFactory;
 
     protected $table = 'grupo';
+    protected $primaryKey = 'ClaveGrupo';
+    public $incrementing = false;
+    protected $keyType = 'int';
     protected $fillable = [
         'ClaveGrupo',
+        'Nombre',
+        'Semestre',
         'ClaveCarrera',
         'ClaveFacultad',
-        'ClaveProfesor'
+        
     ];
     public $timestamps = false;
 
@@ -26,11 +31,6 @@ class Grupo extends Model
     public function facultad()
     {
         return $this->belongsTo(Facultad::class, 'ClaveFacultad');
-    }
-
-    public function profesor()
-    {
-        return $this->belongsTo(Profesor::class, 'ClaveProfesor');
     }
 
     public function grupoMaterias()

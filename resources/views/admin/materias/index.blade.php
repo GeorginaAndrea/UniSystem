@@ -3,38 +3,38 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+<a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.materias.create')}}">Nueva Materia</a>
     <h1>Listado de Materias</h1>
 @stop
 
 @section('content')
-    <div class="container">
-        {{-- @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif --}}
-
-        <!-- Tabla -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Clave</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    {{-- <th>Editar</th>
-                    <th>Eliminar</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($materias as $materia)
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
                     <tr>
-                        <td>{{ $materia->ClaveMateria }}</td>
-                        <td>{{ $materia->Nombre }}</td>
-                        <td>{{ $materia->descripcion }}</td>
+                        <th>Clave</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Editar</th>
+                        {{-- <th>Eliminar</th> --}}
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach($materias as $materia)
+                        <tr>
+                            <td>{{ $materia->ClaveMateria }}</td>
+                            <td>{{ $materia->Nombre }}</td>
+                            <td>{{ $materia->descripcion }}</td>
+                            <td> <a  class="btn btn-primary btn-sm" href="{{route('admin.materias.edit', $materia->ClaveMateria)}}">
+                                Editar
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @stop
 
