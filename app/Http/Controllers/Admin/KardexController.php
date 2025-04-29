@@ -59,7 +59,7 @@ class KardexController extends Controller
      */
     public function update(Request $request, Kardex $kardex)
     {
-        //
+        
     }
 
     /**

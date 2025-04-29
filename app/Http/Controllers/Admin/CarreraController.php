@@ -87,8 +87,8 @@ class CarreraController extends Controller
 
             $carrera->save();
             return redirect("/carreras/{$carrera->ClaveCarrera}")->with('success', 'Datos actualizados exitosamente.' );
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrio un error al actualizar los datos:' . $e->getMessage());
         }
     }
 
