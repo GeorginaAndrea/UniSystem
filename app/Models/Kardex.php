@@ -20,7 +20,7 @@ class Kardex extends Model
         'ClaveCalificacion'
     ];
     public $incrementing = false;
-    public $timestamps = false;
+    
 
     public function grupoMateria()
     {

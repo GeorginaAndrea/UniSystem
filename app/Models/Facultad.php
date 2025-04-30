@@ -21,7 +21,7 @@ class Facultad extends Model
         'Direccion'
     ];
 
-    public $timestamps = false;
+    
 
         public function carreras()
     {

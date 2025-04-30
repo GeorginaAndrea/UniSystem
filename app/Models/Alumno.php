@@ -32,7 +32,7 @@ class Alumno extends Model
         'ClaveCarrera' 
     ];
     public $incrementing = false;
-    public $timestamps = false;
+    
 
     public function facultad()
     {

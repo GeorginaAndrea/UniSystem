@@ -22,7 +22,7 @@ class Profesor extends Model
         'ClaveFacultad'
     ];
     public $incrementing = false;
-    public $timestamps = false;
+    
 
     public function facultad()
     {

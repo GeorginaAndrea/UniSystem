@@ -21,7 +21,7 @@ class Grupo extends Model
         'ClaveFacultad',
         
     ];
-    public $timestamps = false;
+    
 
     public function carrera()
     {

@@ -16,7 +16,7 @@ class Materia extends Model
         'Nombre',
         'descripcion'
     ];
-    public $timestamps = false;
+    
 
         public function grupoMaterias()
     {

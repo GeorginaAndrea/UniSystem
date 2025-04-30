@@ -18,7 +18,7 @@ class GrupoMateria extends Model
         'Periodo',
         'ClaveProfesor'
     ];
-    public $timestamps = false;
+    
 
     public function grupo()
     {

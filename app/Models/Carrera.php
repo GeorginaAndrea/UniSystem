@@ -17,7 +17,7 @@ class Carrera extends Model
         'ClaveCarrera',
         'Nombre'
     ];
-    public $timestamps = false;
+    
 
         public function facultad()
     {
