@@ -61,6 +61,21 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        'auditoria' => [
+            'driver' => 'mysql',
+            'url' => env('DB_URL'),
+            'host' => env('DB_AUDITORIA_HOST', '127.0.0.1'),
+            'port' => env('DB_AUDITORIA_PORT', '3306'),
+            'database' => env('DB_AUDITORIA_DATABASE', 'auditoria'),
+            'username' => env('DB_AUDITORIA_USERNAME', 'root'),
+            'password' => env('DB_AUDITORIA_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_0900_ai_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+        
 
         'mariadb' => [
             'driver' => 'mariadb',
