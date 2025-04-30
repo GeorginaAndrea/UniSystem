@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Audit\LogCambio;
 use App\Models\Facultad;
 use App\Models\Profesor;
 use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProfesorController extends Controller
 {
@@ -66,6 +68,13 @@ class ProfesorController extends Controller
                 'ClaveFacultad' => $validatedData['ClaveFacultad'],
             ]);
 
+            LogCambio::create([
+                'tabla_afectada' => 'profesor',
+                'tipo_cambio' => 'INSERT',
+                'descripcion' => 'Se registró un nuevo profesor con ClaveProfesor: ' . $claveProfesor,
+                'fecha_cambio' => now(),
+            ]);
+
             return redirect('/profesores')->with('success', 'Profesor creado exitosamente.');
             
         } catch (\Exception $e) {
@@ -96,7 +105,31 @@ class ProfesorController extends Controller
      */
     public function update(Request $request, Profesor $profesor)
     {
-        //
+        $validatedData = $request->validate([
+            'ApePaterno' => 'sometimes|string|max:40',
+            'ApeMaterno' => 'sometimes|string|max:40',
+            'Nombres' => 'sometimes|string|max:50',
+            'Email' => 'sometimes|email|max:50',
+            'Telefono' => 'sometimes|string|size:10'
+        ]);
+
+        $datos_anteriores = $profesor->toArray();
+
+        $profesor->update($validatedData);
+
+        $datos_nuevos = $profesor->fresh()->toArray();
+
+        $ip_local = $request->ip();
+
+        LogCambio::create([
+            'usuario_id' => Auth::id(),
+            'tabla_afectada' => 'profesores',
+            'tipo_cambio' => 'UPDATE',
+            'llave_primaria' => $profesor->ClaveProfesor,
+            'datos_anteriores' => json_encode($datos_anteriores),
+            'datos_nuevos' => json_encode($datos_nuevos),
+            'ip_local' => $ip_local,
+        ]);
     }
 
     /**

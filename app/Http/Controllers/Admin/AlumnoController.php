@@ -9,7 +9,8 @@ use App\Models\Carrera;
 use App\Models\Facultad;
 use Illuminate\Support\Str;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Audit\LogCambio;
 
 class AlumnoController extends Controller
 {
@@ -74,6 +75,14 @@ class AlumnoController extends Controller
             $claveAlumno = 'ALU' . strtoupper(Str::random(8));
             
             Alumno::create(array_merge(['ClaveAlumno' => $claveAlumno], $validatedData));
+
+            LogCambio::create([
+                'tabla_afectada' => 'alumno',
+                'tipo_cambio' => 'INSERT',
+                'descripcion' => 'Se registró un nuevo alumno con ClaveAlumno: ' . $claveAlumno,
+                // 'usuario_id' => auth()->id(), // o $user->id si aplica
+                'fecha_cambio' => now(),
+            ]);
             
             return redirect()->route('admin.alumnos.index')
                    ->with('success', 'Alumno registrado exitosamente');
@@ -83,69 +92,9 @@ class AlumnoController extends Controller
                    ->withInput();
         }
     
-        // $claveAlumno = 'ALU' . strtoupper(Str::random(8));
-        
-        // Alumno::create(array_merge(['ClaveAlumno' => $claveAlumno], $validatedData));
-        
-        // return redirect()->route('admin.alumnos.index')->with('success', 'Alumno creado exitosamente.');
-    
-
-
-
-        // try {
-        //     // Validar los datos del formulario
-        //     $validatedData = $request->validate([
-        //        'ApePaterno' => 'required|string|max:40',
-        //         'ApeMaterno' => 'required|string|max:40',
-        //         'Nombres' => 'required|string|max:50',
-        //         'Curp' => 'required|string|size:18|unique:alumnos,Curp',
-        //         'Genero' => 'required|string|size:1',
-        //         'EstCivil' => 'required|string|max:20',
-        //         'FechaNacimiento' => 'required|date',
-        //         'Email' => 'required|email|max:50',
-        //         'Celular' => 'required|string|size:10',
-        //         'Estado' => 'required|string|max:15',
-        //         'Municipio' => 'required|string|max:40',
-        //         'Colonia' => 'required|string|max:50',
-        //         'Direccion' => 'required|string|max:150',
-        //         'Telefono' => 'required|string|size:10',
-        //         'ClaveFacultad' => 'required|integer|exists:facultades,ClaveFacultad',
-        //         'ClaveCarrera' => 'required|integer|exists:carreras,ClaveCarrera',
-        //     ]);
-    
-        //     // Generar ClaveAlumno de forma automática
-        //     $claveAlumno = 'ALU' . strtoupper(Str::random(8));
-    
-        //     // Crear el alumno
-        //     $alumno = Alumno::create([
-        //         'ClaveAlumno' => $claveAlumno,
-        //         'ApePaterno' => $validatedData['ApePaterno'],
-        //         'ApeMaterno' => $validatedData['ApeMaterno'],
-        //         'Nombres' => $validatedData['Nombres'],
-        //         'Curp' => $validatedData['Curp'],
-        //         'Genero' => $validatedData['Genero'],
-        //         'EstCivil' => $validatedData['EstCivil'],
-        //         'FechaNacimiento' => $validatedData['FechaNacimiento'],
-        //         'Email' => $validatedData['Email'],
-        //         'Celular' => $validatedData['Celular'],
-        //         'Estado' => $validatedData['Estado'],
-        //         'Municipio' => $validatedData['Municipio'],
-        //         'Colonia' => $validatedData['Colonia'],
-        //         'Direccion' => $validatedData['Direccion'],
-        //         'Telefono' => $validatedData['Telefono'] ?? null,
-        //         'ClaveFacultad' => $validatedData['ClaveFacultad'],
-        //         'ClaveCarrera' => $validatedData['ClaveCarrera'],
-        //     ]);
-    
-        //     return redirect()->route('admin.alumnos.index')->with('success', 'Alumno creado exitosamente.');
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
-        // }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Alumno $alumno)
     {
         $carreras = Carrera::pluck('Nombre', 'ClaveCarrera');
@@ -184,72 +133,29 @@ class AlumnoController extends Controller
             'ClaveFacultad' => 'sometimes|integer|exists:facultades,ClaveFacultad',
             'ClaveCarrera' => 'sometimes|integer|exists:carreras,ClaveCarrera',
         ]);
+        $datos_anteriores = $alumno->toArray();
     
         $alumno->update($validatedData);
         
-        return redirect()->route('admin.alumnos.show', $alumno)->with('success', 'Datos actualizados exitosamente.');
+        $datos_nuevos = $alumno->fresh()->toArray();
 
-        // try {
-        //     // Validación de datos (campos opcionales para archivos)
-        //     $validatedData = $request->validate([
-        //         'ClaveAlumno' => 'sometimes|string|max:100',
-        //         'ApePaterno' => 'sometimes|string|max:100', // Opcional
-        //         'ApeMaterno' => 'sometimes|string|max:100',
-        //         'Nombres' => 'sometimes|string|max:50', // Opcional
-        //         'EstCivil' => 'sometimes|string|max:20',
-        //         'Estado' => 'sometimes|string|max:15',
-        //         'Municipio' => 'sometimes|string|max:40',
-        //         'Colonia' => 'sometimes|string|max:50',
-        //         'Direccion' => 'sometimes|string|max:150',
-        //         'Telefono' => 'sometimes|string|max:150',
-        //         'Celular' => 'sometimes|string|max:10',
-        //         'Email' => 'sometimes|email|max:100',
-        //         'FechaNacimiento' => 'sometimes|date',
-            
-                
-        //     ]);
-        // } catch (\Illuminate\Validation\ValidationException $e) {
-        //     return redirect()->back()->withErrors($e->errors())->withInput();
-        // }
+        $ip_local = $request->ip();
+        // $ip_gateway = $this->obtenerGateway();
+        // $mac_address = $this->obtenerMac($ip_local);
+        LogCambio::create([
+            'usuario_id' => Auth::id(),
+            'tabla_afectada' => 'alumnos',
+            'tipo_cambio' => 'UPDATE',
+            'llave_primaria' => $alumno->ClaveAlumno,
+            'datos_anteriores' => json_encode($datos_anteriores),
+            'datos_nuevos' => json_encode($datos_nuevos),
+            'ip_local' => $ip_local,
+            // 'ip_gateway' => $ip_gateway,
+            // 'mac_address' => $mac_address,
+        ]);
+    
 
-        
-        // $alumno = Alumno::findOrFail($alumno);
-        
-        // try {
-        //     $alumno->ApePaterno =$request->ApePaterno;
-        //     $alumno->ApeMaterno =$request->ApeMaterno;
-        //     $alumno->Nombres =$request->Nombres;
-        //     $alumno->Curp =$request->Curp;
-        //     $alumno->Genero =$request->Genero;
-        //     $alumno->EstCivil =$request->EstCivil;
-        //     $alumno->FechaNacimiento =$request->FechaNacimiento;
-        //     $alumno->Email =$request->Email;
-        //     $alumno->Celular =$request->Celular;
-        //     $alumno->Estado =$request->Estado;
-        //     $alumno->Municipio =$request->Municipio;
-        //     $alumno->Colonia =$request->Colonia;
-        //     $alumno->Direccion =$request->Direccion;
-        //     $alumno->Telefono =$request->Telefono;
-        
-        //     $alumno->save();
-        //     return redirect("/alumnos/{$alumno->id}")->with('success', 'Datos actualizados exitosamente.');
-
-        
-        // } catch (\Exception $e) {
-        //     // Manejar cualquier error inesperado
-        //     return redirect()->back()->with('error', 'Ocurrió un error al actualizar los datos: ' . $e->getMessage());
-        // }
-
-        
-
-            // $book->authors()->sync($request->author_ids);
-            // $book->categories()->sync($request->category_ids);
-            // $book->collections()->sync($request->collection_ids);
-
-
-            // Redirigir con un mensaje de éxito
-           
-        
+        return redirect()->route('admin.alumnos.show', $alumno)->with('success', 'Datos actualizados exitosamente.');    
     }
 
     /**
