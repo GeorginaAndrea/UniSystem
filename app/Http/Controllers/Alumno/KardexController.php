@@ -11,6 +11,12 @@ class KardexController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function kardex($ClaveAlumno){
+        $alumno = Alumno::with('kardex')->where('ClaveAlumno',$ClaveAlumno)->firstOrFail();
+
+        return view('alumno.kardex.index');
+    }
     public function index()
     {
         //
