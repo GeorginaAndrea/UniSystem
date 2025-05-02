@@ -19,7 +19,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        $alumnos = Alumno::orderBy('ClaveAlumno','asc')->paginate(10);
+        $alumnos = Alumno::orderBy('ClaveAlumno','asc')->paginate(9);
         return view('admin.alumnos.index', compact('alumnos'));
     }
 
@@ -28,9 +28,9 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        $carreras = Carrera::pluck('ClaveCarrera', 'Nombre');
-        $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
-        return view('admin.alumnos.create', compact('facultades', 'carreras'));
+        $carreras = Carrera::pluck('ClaveCarrera', 'NombreCarrera');
+        // $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
+        return view('admin.alumnos.create', compact('carreras'));
     }
 
     /**
@@ -54,12 +54,14 @@ class AlumnoController extends Controller
             'Colonia' => 'required|string|max:50',
             'Direccion' => 'required|string|max:150',
             'Telefono' => 'required|string|size:10',
-            'ClaveFacultad' => 'required|integer|exists:facultad,ClaveFacultad',
+            // 'ClaveFacultad' => 'required|integer|exists:facultad,ClaveFacultad',
             'ClaveCarrera' => 'required|integer|exists:carrera,ClaveCarrera',
         ],
         [
             'Curp.unique' => 'La CURP ingresada ya está registrada',
             'Curp.size' => 'La CURP debe tener exactamente 18 caracteres',
+            'ClaveAlumno' => 'required|string|unique:alumno,ClaveAlumno',
+
             // ... otros mensajes personalizados
         ]);
 
@@ -73,16 +75,26 @@ class AlumnoController extends Controller
             // Asignar rol de alumno
             $user->assignRole('alumno');
             $claveAlumno = 'ALU' . strtoupper(Str::random(8));
+            $alumno = Alumno::create(array_merge([
+                'ClaveAlumno' => $claveAlumno,
+                'FechaIngreso' => now()
+            ], $validatedData));
             
-            Alumno::create(array_merge(['ClaveAlumno' => $claveAlumno], $validatedData));
+            // Alumno::create(array_merge(['ClaveAlumno', 'fechaIngreso' => $claveAlumno, now()], $validatedData));
 
-            LogCambio::create([
-                'tabla_afectada' => 'alumno',
-                'tipo_cambio' => 'INSERT',
-                'descripcion' => 'Se registró un nuevo alumno con ClaveAlumno: ' . $claveAlumno,
-                // 'usuario_id' => auth()->id(), // o $user->id si aplica
-                'fecha_cambio' => now(),
-            ]);
+            try {
+                $log_cambioalumno = LogCambio::create([
+                    'usuario_id' => Auth::id(),
+                    'tabla_afectada' => 'alumnos',
+                    'tipo_cambio' => 'INSERT',
+                    'llave_primaria' => $alumno->ClaveAlumno,
+                    'descripcion' => 'Se registró un nuevo alumno con ClaveAlumno: ' . $claveAlumno,
+                     // o $user->id si aplica
+                    'fecha_cambio' => now(),
+                ]);
+            } catch (\Exception $e) {
+                dd('Error alguardar en log_cambios: ' . $e->getMessage());
+            }
             
             return redirect()->route('admin.alumnos.index')
                    ->with('success', 'Alumno registrado exitosamente');
@@ -130,7 +142,7 @@ class AlumnoController extends Controller
             'Colonia' => 'sometimes|string|max:50',
             'Direccion' => 'sometimes|string|max:150',
             'Telefono' => 'sometimes|string|size:10',
-            'ClaveFacultad' => 'sometimes|integer|exists:facultades,ClaveFacultad',
+            // 'ClaveFacultad' => 'sometimes|integer|exists:facultades,ClaveFacultad',
             'ClaveCarrera' => 'sometimes|integer|exists:carreras,ClaveCarrera',
         ]);
         $datos_anteriores = $alumno->toArray();

@@ -29,8 +29,8 @@ class ProfesorController extends Controller
      */
     public function create()
     {
-
-        return view('admin.profesores.create');
+        $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
+        return view('admin.profesores.create', compact('facultades'));
     }
 
     /**
@@ -53,7 +53,7 @@ class ProfesorController extends Controller
                 'password' => bcrypt('contraseñaTemporal123'), // puedes generar o enviar por correo
             ]);
     
-            // Asignar rol de alumno
+            // Asignar rol de alumno]\
             $user->assignRole('profesor');
 
             $claveProfesor = 'PROF' . strtoupper(Str::random(8));
@@ -68,14 +68,32 @@ class ProfesorController extends Controller
                 'ClaveFacultad' => $validatedData['ClaveFacultad'],
             ]);
 
-            LogCambio::create([
+            /*/
+            $log_cambiomaestro = LogCambio::create([
                 'tabla_afectada' => 'profesor',
                 'tipo_cambio' => 'INSERT',
                 'descripcion' => 'Se registró un nuevo profesor con ClaveProfesor: ' . $claveProfesor,
                 'fecha_cambio' => now(),
             ]);
+            */
+            try {
+                $log_cambiomaestro = LogCambio::create([
+                    'usuario_id' => Auth::id(),
+                    'tabla_afectada' => 'profesores',
+                    'tipo_cambio' => 'INSERT',
+                    'llave_primaria' => $profesor->ClaveProfesor,
+                    
+                    //'datos_anteriores' => json_encode($datos_anteriores),
+                    //'datos_nuevos' => json_encode($datos_nuevos),
+                    //'ip_local' => $ip_local,
+                    'fecha_cambio' => now(),
+                ]);
+            } catch (\Exception $e) {
+                dd('Error al guardar en log_cambios: ' . $e->getMessage());
+            }
+            
 
-            return redirect('/profesores')->with('success', 'Profesor creado exitosamente.');
+            return redirect()->route('admin.profesores.index')->with('success', 'Profesor creado exitosamente.' . $log_cambiomaestro);
             
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Ocurrio un error: ' . $e->getMessage());
@@ -95,14 +113,61 @@ class ProfesorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Profesor $profesor)
+    public function edit( $profesor)
     {
-        return view('admin.profesores.edit', compact('profesor'));
+        $facultades = Facultad::all();
+        $profesor = Profesor::find($profesor);
+        return view('admin.profesores.edit', compact('profesor',  'facultades'));
     }
 
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, Profesor $profesor)
+    // {
+    //     $validatedData = $request->validate([
+    //         'ApePaterno' => 'sometimes|string|max:40',
+    //         'ApeMaterno' => 'sometimes|string|max:40',
+    //         'Nombres' => 'sometimes|string|max:50',
+    //         'Email' => 'sometimes|email|max:50',
+    //         'Telefono' => 'sometimes|string|size:10'
+    //     ]);
+
+    //     $profesor = Profesor::findOrFail();
+
+    //     try {
+    //         $datos_anteriores = $profesor->toArray();
+
+    //         $profesor->ApePaterno = $request->ApePaterno;
+    //         $profesor->ApeMaterno = $request->ApeMaterno;
+    //         $profesor->Nombres = $request->Nombres;
+    //         $profesor->Email = $request->Email;
+    //         $profesor->Telefono = $request->Telefono;
+
+    //     $datos_nuevos = $profesor->fresh()->toArray();
+
+    //     $ip_local = $request->ip();
+
+    //     LogCambio::create([
+    //         'usuario_id' => Auth::id(),
+    //         'tabla_afectada' => 'profesores',
+    //         'tipo_cambio' => 'UPDATE',
+    //         'llave_primaria' => $profesor->ClaveProfesor,
+    //         'datos_anteriores' => json_encode($datos_anteriores),
+    //         'datos_nuevos' => json_encode($datos_nuevos),
+    //         // 'ip_local' => $ip_local,
+    //     ]); 
+    //     return redirect()->route('admin.profesores.index')->with('success', 'Profesor actualizado correctamente.');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Ocurrió un error al actualizar el libro: ' . $e->getMessage());
+    //     }
+
+        
+
+        
+
+    // }
+
     public function update(Request $request, Profesor $profesor)
     {
         $validatedData = $request->validate([
@@ -113,26 +178,35 @@ class ProfesorController extends Controller
             'Telefono' => 'sometimes|string|size:10'
         ]);
 
-        $datos_anteriores = $profesor->toArray();
+        try {
+            $datos_anteriores = $profesor->toArray();
 
-        $profesor->update($validatedData);
+            $profesor->ApePaterno = $validatedData['ApePaterno'] ?? $profesor->ApePaterno;
+            $profesor->ApeMaterno = $validatedData['ApeMaterno'] ?? $profesor->ApeMaterno;
+            $profesor->Nombres = $validatedData['Nombres'] ?? $profesor->Nombres;
+            $profesor->Email = $validatedData['Email'] ?? $profesor->Email;
+            $profesor->Telefono = $validatedData['Telefono'] ?? $profesor->Telefono;
 
-        $datos_nuevos = $profesor->fresh()->toArray();
+            $profesor->save(); // ¡IMPORTANTE!
 
-        $ip_local = $request->ip();
+            $datos_nuevos = $profesor->fresh()->toArray();
 
-        LogCambio::create([
-            'usuario_id' => Auth::id(),
-            'tabla_afectada' => 'profesores',
-            'tipo_cambio' => 'UPDATE',
-            'llave_primaria' => $profesor->ClaveProfesor,
-            'datos_anteriores' => json_encode($datos_anteriores),
-            'datos_nuevos' => json_encode($datos_nuevos),
-            'ip_local' => $ip_local,
-        ]);
+            LogCambio::create([
+                'usuario_id' => Auth::id(),
+                'tabla_afectada' => 'profesores',
+                'tipo_cambio' => 'UPDATE',
+                'llave_primaria' => $profesor->ClaveProfesor,
+                'datos_anteriores' => json_encode($datos_anteriores),
+                'datos_nuevos' => json_encode($datos_nuevos),
+            ]);
+
+            return redirect()->route('admin.profesores.index')->with('success', 'Profesor actualizado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al actualizar el profesor: ' . $e->getMessage());
+        }
     }
 
-    /**
+   /**
      * Remove the specified resource from storage.
      */
     public function destroy(Profesor $profesor)

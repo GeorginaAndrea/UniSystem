@@ -40,6 +40,10 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center mt-3">
+                {{ $profesores->links() }}
+            </div>
+            
         </div>
     </div>
     <div class="container">
@@ -50,6 +54,8 @@
         @endif --}}
 
         <!-- Tabla -->
+
+    
         
     </div>
 @stop

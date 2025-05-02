@@ -8,7 +8,7 @@
 @stop
 
 @section('content')
-  @if(session('error'))
+  {{-- @if(session('error'))
   <div class="alert alert-danger alert-dismissible fade show">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>Error:</strong> {{ session('error') }}
@@ -24,7 +24,7 @@
           @endforeach
       </ul>
   </div>
-  @endif
+  @endif --}}
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Registrar Alumno</h3>
@@ -133,21 +133,6 @@
        
         <h5 class="mb-3">Datos Escolares</h5>
         <div class="row">
-        
-        <div class="col-md-6">
-            <div class="form-group">
-            <label for="ClaveFacultad">Facultad</label>
-            <select name="ClaveFacultad" class="form-control">
-                <option value="">Seleccione una facultad</option>
-                @foreach ($facultades as $clave => $nombre)
-                <option value="{{ $clave }}" {{ old('ClaveFacultad') == $clave ? 'selected' : '' }}>
-                  {{ $nombre }}
-                </option>
-                @endforeach
-            </select>
-            </div>
-        </div>
-
         <div class="col-md-6">
             <div class="form-group">
             <label for="ClaveCarrera">Carrera</label>

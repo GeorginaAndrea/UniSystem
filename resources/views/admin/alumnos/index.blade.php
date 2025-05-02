@@ -40,11 +40,13 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center mt-3">
+                {{ $alumnos->links() }}
+            </div>
+            
         </div>
     </div>
-    <div class="mt-4">
-        {{ $alumnos->links() }}
-    </div>
+    
 @stop
 
 @section('css')

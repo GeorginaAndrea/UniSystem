@@ -25,7 +25,7 @@
                         <tr>
                             <td>{{ $materia->ClaveMateria }}</td>
                             <td>{{ $materia->Nombre }}</td>
-                            <td>{{ $materia->descripcion }}</td>
+                            <td>{{ $materia->Descripcion }}</td>
                             <td> <a  class="btn btn-primary btn-sm" href="{{route('admin.materias.edit', $materia->ClaveMateria)}}">
                                 Editar
                                 </a>

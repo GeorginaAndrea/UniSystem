@@ -7,6 +7,8 @@ use App\Models\Grupo;
 use Illuminate\Http\Request;
 use App\Models\Carrera;
 use App\Models\Facultad;
+use App\Models\ProfesorGrupoMateria;
+use App\Models\GrupoMateria;
 
 class GrupoController extends Controller
 {
@@ -15,8 +17,11 @@ class GrupoController extends Controller
      */
     public function index()
     {
+        $gruposAsignados = GrupoMateria::whereHas('asignaciones')->get();
+        $gruposSinAsignar = GrupoMateria::whereDoesntHave('asignaciones')->get();
+        $asignaciones = ProfesorGrupoMateria::with(['profesor', 'grupoMateria'])->get();
         $grupos = Grupo::orderBy('ClaveGrupo','asc')->paginate(10);
-        return view('admin.grupos.index', compact('grupos'));
+        return view('admin.grupos.index', compact('grupos','gruposAsignados','gruposSinAsignar','asignaciones'));
     }
 
     /**

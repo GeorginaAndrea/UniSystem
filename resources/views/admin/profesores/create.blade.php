@@ -54,9 +54,16 @@
             </div>
   
             <div class="form-group">
-              <label for="ClaveFacultad">Clave Facultad</label>
-              <input type="number" name="ClaveFacultad" class="form-control" placeholder="Ingrese la clave de la facultad">
-            </div>
+              <label for="ClaveFacultad">Facultad</label>
+              <select name="ClaveFacultad" class="form-control">
+                  <option value="">Seleccione una facultad</option>
+                  @foreach ($facultades as $clave => $nombre)
+                  <option value="{{ $clave }}" {{ old('ClaveFacultad') == $clave ? 'selected' : '' }}>
+                    {{ $nombre }}
+                  </option>
+                  @endforeach
+              </select>
+              </div>
           </div>
   
         </div>
