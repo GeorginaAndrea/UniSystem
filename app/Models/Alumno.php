@@ -28,16 +28,17 @@ class Alumno extends Model
         'Celular',
         'Email',
         'FechaNacimiento',
-        'ClaveFacultad', // Asegúrate de incluir estos campos
+        'FechaIngreso',
+        
         'ClaveCarrera' 
     ];
     public $incrementing = false;
     
 
-    public function facultad()
-    {
-        return $this->belongsTo(Facultad::class, 'ClaveFacultad','ClaveFacultad' );
-    }
+    // public function facultad()
+    // {
+    //     return $this->belongsTo(Facultad::class, 'ClaveFacultad','ClaveFacultad' );
+    // }
 
     public function carrera()
     {

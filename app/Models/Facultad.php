@@ -13,10 +13,9 @@ class Facultad extends Model
     // protected $keyType = 'string';
     protected $table = 'facultad';
     protected $primaryKey = 'ClaveFacultad';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
-        'ClaveFacultad',
         'NombreFacultad',
         'Direccion'
     ];

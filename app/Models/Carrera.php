@@ -11,11 +11,11 @@ class Carrera extends Model
 
     protected $table = 'carrera';
     protected $primaryKey = 'ClaveCarrera';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [ 
-        'ClaveCarrera',
-        'Nombre'
+        'Nombre',
+        'ClaveFacultad'
     ];
     
 

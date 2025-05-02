@@ -11,10 +11,9 @@ class Grupo extends Model
 
     protected $table = 'grupo';
     protected $primaryKey = 'ClaveGrupo';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [
-        'ClaveGrupo',
         'Nombre',
         'Semestre',
         'ClaveCarrera',

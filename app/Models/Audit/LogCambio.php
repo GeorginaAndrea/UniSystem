@@ -22,6 +22,6 @@ class LogCambio extends Model
         'ip_local',
         'ip_gateway',
         'mac_address',
-        'fecha'
+        'fecha',
     ];
 }

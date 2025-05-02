@@ -15,8 +15,10 @@ class GrupoMateria extends Model
     protected $fillable = [
         'ClaveGrupo',
         'ClaveMateria',
-        'Periodo',
-        'ClaveProfesor'
+        'CupoMaximo',
+        'FechaInicio',
+        'FechaFin',
+        
     ];
     
 
@@ -29,14 +31,20 @@ class GrupoMateria extends Model
     {
         return $this->belongsTo(Materia::class, 'ClaveMateria');
     }
-    public function profesor()
-    {
-        return $this->belongsTo(Profesor::class, 'ClaveProfesor'); // nueva relación
-    }
+    // public function profesor()
+    // {
+    //     return $this->belongsTo(Profesor::class, 'ClaveProfesor'); // nueva relación
+    // }
 
     public function kardex()
     {
         return $this->hasMany(Kardex::class, 'ClaveGrupoMateria');
+    }
+
+    
+    public function asignaciones()
+    {
+        return $this->hasMany(ProfesorGrupoMateria::class, 'ClaveGrupoMateria', 'ClaveGrupoMateria');
     }
 
 }

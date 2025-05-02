@@ -19,7 +19,8 @@ class Profesor extends Model
         'Nombres',
         'Email',
         'Telefono',
-        'ClaveFacultad'
+        'ClaveFacultad',
+        'Departamento'
     ];
     public $incrementing = false;
     
@@ -33,5 +34,17 @@ class Profesor extends Model
     {
         return $this->hasMany(Grupo::class, 'ClaveProfesor');
     }
+
+    public function materias()
+    {
+        return $this->belongsToMany(Materia::class, 'profesor_materia', 'ClaveProfesor', 'ClaveMateria');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 
 }

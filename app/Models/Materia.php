@@ -23,4 +23,5 @@ class Materia extends Model
         return $this->hasMany(GrupoMateria::class, 'ClaveMateria');
     }
 
+    
 }

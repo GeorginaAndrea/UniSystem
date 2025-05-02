@@ -10,16 +10,16 @@ class Kardex extends Model
     use HasFactory;
 
     protected $table = 'kardex';
-    protected $keyType = 'string';
+    protected $keyType = 'int';
     protected $primaryKey = 'ClaveKardex';
+    public $incrementing = true;
     protected $fillable = [
-        'ClaveKardex',
         'ClaveGrupoMateria',
         'ClaveAlumno',
-        'Semestre',
-        'ClaveCalificacion'
+        'Calificacion',
+        
     ];
-    public $incrementing = false;
+    // public $incrementing = false;
     
 
     public function grupoMateria()
@@ -32,9 +32,5 @@ class Kardex extends Model
         return $this->belongsTo(Alumno::class, 'ClaveAlumno');
     }
 
-    public function calificacion()
-    {
-        return $this->belongsTo(Calificacion::class, 'ClaveCalificacion'); // <-- nueva relación
-    }
-
+    
 }
