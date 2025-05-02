@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
         ->names('profesor.alumnos')
         ->parameters(['alumnos' => 'alumno']);
 
+    Route::resource('grupos', 
+    AlumnoController::class)
+        ->names('profesor.grupos')
+        ->parameters(['grupos' => 'grupo']);
+
     Route::resource('materias', MateriaController::class)
         ->names('profesor.materias')
         ->parameters(['materias' => 'materia']);

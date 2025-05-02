@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,6 +12,18 @@ Route::get('/', function () {
 Route::get('/prueba', function () {
     return view('welcome');
 });
+
+
+
+Route::get('/test-auditoria-db', function () {
+    try {
+        $result = DB::connection('auditoria')->select('SELECT 1 as test');
+        return response()->json(['success' => true, 'result' => $result]);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
+});
+
 
 
 Route::get('/home-page', function () {
