@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GrupoMateria;
 use Illuminate\Http\Request;
+use App\Models\Materia;
+use App\Models\Grupo;
 
 class GrupoMateriaController extends Controller
 {
@@ -13,24 +15,41 @@ class GrupoMateriaController extends Controller
      */
     public function index()
     {
-        $gruposmaterias = GrupoMateria::orderBy('name','asc');
-        return view('admin.gruposmaterias.index');
+        $gruposmaterias = GrupoMateria::orderBy('ClaveGrupoMateria','asc');
+        return view('admin.gruposmaterias.index', compact('gruposmaterias'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Grupo $grupo)
     {
-        return view('admin.gruposmaterias.create');
+        $materias = Materia::where('Semestre', $grupo->Semestre)
+            ->where('ClaveCarrera', $grupo->ClaveCarrera)
+           ->get();
+
+    return view('admin.gruposmaterias.create', compact('grupo', 'materias'));
+        // $materias = Materia::all();
+        // return view('admin.gruposmaterias.create', compact('grupo', 'materias'));
+        // //return view('admin.gruposmaterias.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $grupo)
     {
-        //
+        foreach ($request->materias as $materia) {
+            GrupoMateria::create([
+                'ClaveGrupo' => $grupo,
+                'ClaveMateria' => $materia['ClaveMateria'],
+                'CupoMaximo' => $materia['CupoMaximo'],
+                'FechaInicio' => $materia['FechaInicio'],
+                'FechaFin' => $materia['FechaFin'],
+            ]);
+        }
+    
+        return redirect()->route('admin.profesorgruposmateria.index', $grupo);
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\GrupoMateriaController;
 use App\Http\Controllers\Admin\KardexController;
 use App\Http\Controllers\Admin\ProfesorController;
 use App\Http\Controllers\Admin\MateriaController;
+use App\Http\Controllers\Admin\ProfesorGrupoMateriaController;
 
     Route::get('/',[HomeController::class, 'index'])->name('admin.home');
 
@@ -46,12 +47,15 @@ use App\Http\Controllers\Admin\MateriaController;
     //Rutas Grupos Materias
     Route::resource('gruposmaterias', GrupoMateriaController::class)
         ->names('admin.gruposmaterias')
-        ->parameters(['gruposmaterias' => 'grupo_materia']);
+        ->parameters(['gruposmaterias' => 'grupomateria']);
 
     //Rutas Kardexs
     Route::resource('kardexs', KardexController::class)
         ->names('admin.kardexs')
         ->parameters(['kardex' => 'kardex']);
+
+    Route::get('admin/grupos/{grupo}/profesores', [ProfesorGrupoMateriaController::class, 'index'])->name('admin.profesorgrupomateria.index');
+    Route::post('admin/grupos/{grupo}/profesores', [ProfesorGrupoMateriaController::class, 'store'])->name('admin.profesorgrupomateria.store');
 // Route::get('/',function(){
 //     return "cdcsdhlshd";
 // });

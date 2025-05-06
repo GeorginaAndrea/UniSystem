@@ -331,35 +331,40 @@ return [
         [
             'text' => 'Gestión Académica',
             'route' => 'admin.facultades.index',
-            'can' => 'super-admin',
+            // 'can' => 'admin.facultades.index',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                         [
                             'text' => 'Facultades',
                             'route' => 'admin.facultades.index',
+                            'can' => 'admin.facultades.index',
                             'icon' => 'fas fa-school',
                         ],
                         [
                             'text' => 'Carreras',
                             'route' => 'admin.carreras.index',
+                            'can' => 'admin.carreras.index',
                             'icon' => 'fas fa-flag',
                         ],
                         [
                             'text' => 'Materias',
                             'route' => 'admin.materias.index',
+                            'can' => 'admin.materias.index',
+                            'icon' => 'fas fa-star',
                             
                         ],
                         [
                             'text' => 'Grupos',
                             'route' => 'admin.grupos.index',
-                            
+                            'can' => 'admin.grupos.index',
+                            'icon' => 'fas fa-user-shield'
                         ],
                     ],
         ],
         [
             'text' => 'Administración de usuarios',
             'route' => 'admin.carreras.index',
-            // 'can' => ['super-admin', 'admin'],
+            'can' => 'admin.home',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                         [
@@ -394,13 +399,13 @@ return [
         [
             'text' => 'Auditoría y Seguridad',
             'icon' => 'fas fa-shield-alt',
-            'can' => ['super-admin.home', 'admin.home'],
+            'can' => 'super-admin.home',
             'submenu' => [
                 [
                     'text' => 'Historial de Actividades',
-                    // 'route' => 'admin.auditoria.historial',
+                    'route' => 'super-admin.auditoria.historial.index',
                     'icon' => 'fas fa-history',
-                    // 'can' => 'super-admin.home'
+                    'can' => 'super-admin.auditoria.historial.index'
                 ],
                 [
                     'text' => 'Dispositivos Registrados',
@@ -421,11 +426,12 @@ return [
         [
             'text' => 'Mis Materias',
             'icon' => 'fas fa-book-open',
-            // 'can' => 'profesor.home',
+            'can' => 'profesor.home',
             'submenu' => [
                 [
                     'text' => 'Lista de Materias',
                     'route' => 'profesor.materias.index',
+                    'can' => 'profesor.materias.index',
                     'icon' => 'fas fa-list'
                 ],
             ],
@@ -433,7 +439,7 @@ return [
         [
             'text' => 'Alumnos',
             'icon' => 'fas fa-user-graduate',
-            // 'can' => 'profesor.home',
+            'can' => 'profesor',
             'submenu' => [
                 [
                     'text' => 'Lista de Alumnos por Grupo',
@@ -448,7 +454,7 @@ return [
         [
             'text' => 'Mi Información',
             'icon' => 'fas fa-user',
-            // 'can' => 'alumnos.home',
+            'can' => 'alumnos.home',
             'submenu' => [
                 [
                     'text' => 'Información Personal',

@@ -10,7 +10,10 @@ class ProfesorGrupoMateria extends Model
     use HasFactory;
     protected $table = 'profesor_grupomateria';
 
-
+    public $fillable = [
+        'ClaveProfesor',
+        'ClaveGrupoMateria'
+    ];
     
     public function profesor()
     {

@@ -13,22 +13,38 @@ class ProfesorGrupoMateriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($grupo)
     {
-        $gruposAsignados = GrupoMateria::whereHas('asignaciones')->get();
-        $gruposSinAsignar = GrupoMateria::whereDoesntHave('asignaciones')->get();
-        $asignaciones = ProfesorGrupoMateria::with(['profesor', 'grupoMateria'])->get();
-        return view('admin.grupos.index', compact('asignaciones', 'gruposAsignados', 'gruposSinAsignar'));
+        // $gruposAsignados = GrupoMateria::whereHas('asignaciones')->get();
+        // $gruposSinAsignar = GrupoMateria::whereDoesntHave('asignaciones')->get();
+        // $asignaciones = ProfesorGrupoMateria::with(['profesor', 'grupoMateria'])->get();
+        // return view('admin.grupos.index', compact('asignaciones', 'gruposAsignados', 'gruposSinAsignar'));
+    $grupomaterias = GrupoMateria::where('ClaveGrupo', $grupo)->with('materia')->get();
+    $profesores = Profesor::all();
+
+    return view('admin.profesorgrupomateria.index', compact('grupomaterias', 'profesores', 'grupo'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request, $grupo)
     {
-        $profesores = Profesor::all();
-        $grupoMaterias = GrupoMateria::all();
-        return view('asignaciones.create', compact('profesores', 'grupoMaterias'));
+        // $profesores = Profesor::all();
+        // $grupoMaterias = GrupoMateria::all();
+        // return view('asignaciones.create', compact('profesores', 'grupoMaterias'));
+        foreach ($request->asignaciones as $claveGrupoMateria => $profesores) {
+            ProfesorGrupoMateria::where('ClaveGrupoMateria', $claveGrupoMateria)->delete();
+    
+            foreach ($profesores as $claveProfesor) {
+                ProfesorGrupoMateria::create([
+                    'ClaveGrupoMateria' => $claveGrupoMateria,
+                    'ClaveProfesor' => $claveProfesor,
+                ]);
+            }
+        }
+    
+        return redirect()->route('admin.grupos.index')->with('success', 'Profesores asignados correctamente.');
     }
 
     /**

@@ -14,7 +14,7 @@ class Carrera extends Model
     public $incrementing = true;
     protected $keyType = 'int';
     protected $fillable = [ 
-        'Nombre',
+        'NombreCarrera',
         'ClaveFacultad'
     ];
     

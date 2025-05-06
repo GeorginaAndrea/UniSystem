@@ -4,7 +4,7 @@
 
 @section('content_header')
 <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.grupos.create')}}">Nuevo Grupo</a>
-    <h1>Listado de materias asignadas</h1>
+    <h1>Listado de grupos</h1>
 @stop
 
 @section('content')
@@ -18,8 +18,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Clave Grupo</th>
-                        <th>Clave Facultad</th>
-                        <th>Clave Carrera</th>
+                        <th>Clave Materia</th>
+                        <th>CupoMaximo</th>
                         <th>Asignado a</th>
                         <th>Editar</th>
                     </tr>
@@ -28,8 +28,8 @@
                     @foreach($gruposAsignados as $grupo)
                         <tr>
                             <td>{{ $grupo->ClaveGrupo }}</td>
-                            <td>{{ $grupo->ClaveFacultad }}</td>
-                            <td>{{ $grupo->ClaveCarrera }}</td>
+                            <td>{{ $grupo->ClaveMateria }}</td>
+                            <td>{{ $grupo->CupoMaximo }}</td>
                             <td>
                                 @foreach($grupo->asignaciones as $asignacion)
                                     {{ $asignacion->ClaveProfesor }}<br>
@@ -53,8 +53,8 @@
                 <thead class="thead-light">
                     <tr>
                         <th>Clave Grupo</th>
-                        <th>Clave Facultad</th>
-                        <th>Clave Carrera</th>
+                        <th>Clave ClaveCarrera</th>
+                        <th>Cupo Maximo</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -62,8 +62,8 @@
                     @foreach($gruposSinAsignar as $grupo)
                         <tr>
                             <td>{{ $grupo->ClaveGrupo }}</td>
-                            <td>{{ $grupo->ClaveFacultad }}</td>
-                            <td>{{ $grupo->ClaveCarrera }}</td>
+                            <td>{{ $grupo->ClaveMateria }}</td>
+                            <td>{{ $grupo->CupoMaximo }}</td>
                             <td><a class="btn btn-info btn-sm" href="{{ route('admin.grupos.edit', $grupo->ClaveGrupo) }}">Asignar</a></td>
                         </tr>
                     @endforeach

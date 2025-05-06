@@ -68,7 +68,7 @@ return [
             'port' => env('DB_AUDITORIA_PORT', '3306'),
             'database' => env('DB_AUDITORIA_DATABASE', 'auditoria'),
             'username' => env('DB_AUDITORIA_USERNAME', 'root'),
-            'password' => env('DB_AUDITORIA_PASSWORD', ''),
+            'password' => env('DB_AUDITORIA_PASSWORD', '123456789'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_0900_ai_ci',
             'prefix' => '',

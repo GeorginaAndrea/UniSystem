@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Profesor;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\ProfesorGrupoMateria;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class ProfesorGrupoMateriaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('profesor.home');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(ProfesorGrupoMateria $profesorGrupoMateria)
     {
         //
     }
@@ -42,7 +42,7 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(ProfesorGrupoMateria $profesorGrupoMateria)
     {
         //
     }
@@ -50,7 +50,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, ProfesorGrupoMateria $profesorGrupoMateria)
     {
         //
     }
@@ -58,7 +58,7 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ProfesorGrupoMateria $profesorGrupoMateria)
     {
         //
     }

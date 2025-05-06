@@ -109,7 +109,7 @@ class AlumnoController extends Controller
 
     public function show(Alumno $alumno)
     {
-        $carreras = Carrera::pluck('Nombre', 'ClaveCarrera');
+        $carreras = Carrera::pluck('NombreCarrera', 'ClaveCarrera');
         $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
         return view('admin.alumnos.show', compact('alumno', 'carreras', 'facultades'));
     }
@@ -117,9 +117,12 @@ class AlumnoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Alumno $alumno)
+    public function edit($alumno)
+
     {
-        return view('admin.alumnos.edit', compact('alumno'));
+        $carreras = Carrera::pluck('ClaveCarrera', 'NombreCarrera');
+        $alumno = Alumno::find($alumno);
+        return view('admin.alumnos.edit', compact('alumno', 'carreras'));
     }
 
     /**
@@ -131,7 +134,7 @@ class AlumnoController extends Controller
             'ApePaterno' => 'sometimes|string|max:40',
             'ApeMaterno' => 'sometimes|string|max:40',
             'Nombres' => 'sometimes|string|max:50',
-            'Curp' => 'sometimes|string|size:18|unique:alumnos,Curp,'.$alumno->ClaveAlumno.',ClaveAlumno',
+            'Curp' => 'sometimes|string|size:18|unique:alumno,Curp,'.$alumno->ClaveAlumno.',ClaveAlumno',
             'Genero' => 'sometimes|string|size:1',
             'EstCivil' => 'sometimes|string|max:20',
             'FechaNacimiento' => 'required|date',
@@ -143,7 +146,7 @@ class AlumnoController extends Controller
             'Direccion' => 'sometimes|string|max:150',
             'Telefono' => 'sometimes|string|size:10',
             // 'ClaveFacultad' => 'sometimes|integer|exists:facultades,ClaveFacultad',
-            'ClaveCarrera' => 'sometimes|integer|exists:carreras,ClaveCarrera',
+            'ClaveCarrera' => 'sometimes|integer|exists:carrera,ClaveCarrera',
         ]);
         $datos_anteriores = $alumno->toArray();
     
@@ -167,7 +170,7 @@ class AlumnoController extends Controller
         ]);
     
 
-        return redirect()->route('admin.alumnos.show', $alumno)->with('success', 'Datos actualizados exitosamente.');    
+        return redirect()->route('admin.alumnos.index', $alumno)->with('success', 'Datos actualizados exitosamente.');    
     }
 
     /**

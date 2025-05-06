@@ -25,26 +25,51 @@ class RoleSeeder extends Seeder
     $permissions = [
         'super-admin' => [
             'super-admin.home',
+            'super-admin.auditoria.historial.index',
+            'super-admin.auditoria.historial.show',
             'super-admin.admin.index',
             'super-admin.admin.create',
             'super-admin.admin.edit',
             'super-admin.admin.destroy',
+            
         ],
         'admin' => [
             'admin.home',
+            ///permisos alumnos
             'admin.alumnos.index',
             'admin.alumnos.kardex',
             'admin.alumnos.create',
             'admin.alumnos.edit',
             'admin.alumnos.destroy',
+
+            ///permisos profesores
             'admin.profesores.index',
             'admin.profesores.create',
             'admin.profesores.edit',
             'admin.profesores.destroy',
+
+            ///permisos grupos
+            'admin.grupos.index',
+            'admin.grupos.create',
+            'admin.grupos.show',
+            'admin.grupos.edit',
+
+            //permisos materias
+            'admin.materias.index',
+            'admin.materias.create',
+            'amdin.materias.edit',
+
+            ///permisos grupos materias
+            'admin.grupomateria.index',
+            'admin.grupomateria.edit',
+
+            ///permisos kardex 
+            'admin.kardex.index',
+            
+
         ],
         'alumno' => [
             'alumnos.home',
-            'alumnos.show',
             'alumnos.kardex',
         ],
         'profesor' => [

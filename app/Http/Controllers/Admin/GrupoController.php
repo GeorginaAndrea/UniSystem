@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use App\Models\Carrera;
 use App\Models\Facultad;
 use App\Models\ProfesorGrupoMateria;
 use App\Models\GrupoMateria;
+use App\Models\Materia;
 
 class GrupoController extends Controller
 {
@@ -29,9 +31,9 @@ class GrupoController extends Controller
      */
     public function create()
     {
-        $carreras = Carrera::pluck('ClaveCarrera', 'Nombre');
-        $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
-        return view('admin.grupos.create', compact('carreras','facultades'));
+        $carreras = Carrera::all();
+        $materias = Materia::all();
+        return view('admin.grupos.create', compact('carreras', 'materias'));
     }
 
     /**
@@ -39,34 +41,55 @@ class GrupoController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'Nombre' => 'required|string|max:2', // Limitar nombre del grupo a dos caracteres
-            'Semestre' => 'required|integer|min:1|max:12', // Semestre de 1 a 12
-            'ClaveCarrera' => 'required|integer|exists:carrera,ClaveCarrera', // Asegurar que la clave de la carrera exista
-            'ClaveFacultad' => 'required|integer|exists:facultad,ClaveFacultad', // Asegurar que la clave de la facultad exista
-        ],
-        [
-            'Nombre.unique' => 'Este nombre ya esta siendo utilizado'
-        ]);
-        try {
+        // $validatedData = $request->validate([
+        //     'Nombre' => 'required|string|max:2', // Limitar nombre del grupo a dos caracteres
+        //     'Semestre' => 'required|integer|min:1|max:12', // Semestre de 1 a 12
+        //     'ClaveCarrera' => 'required|integer|exists:carrera,ClaveCarrera', // Asegurar que la clave de la carrera exista
+        //     'materias_claves' => 'required|array'// Asegurar que la clave de la facultad exista
+        // ],
+        // [
+
+        // ]);
+        // try {
             
     
-            $ultimoClave = Grupo::max('ClaveGrupo');
-            $nuevaClaveGrupo = $ultimoClave ? $ultimoClave + 1 : 1;
+        //     $ultimoClave = Grupo::max('ClaveGrupo');
+        //     $nuevaClaveGrupo = $ultimoClave ? $ultimoClave + 1 : 1;
     
-            Grupo::create([
-                'ClaveGrupo' => $nuevaClaveGrupo,
-                'Nombre' => $request->Nombre,
-                'Semestre' => $request->Semestre,
-                'ClaveCarrera' => $request->ClaveCarrera,
-                'ClaveFacultad' => $request->ClaveFacultad,
-            ]);
+        //     $grupo = Grupo::create([
+        //         'ClaveGrupo' => $nuevaClaveGrupo,
+        //         'Nombre' => $request->Nombre,
+        //         'Semestre' => $request->Semestre,
+        //         'ClaveCarrera' => $request->ClaveCarrera,
+                
+        //     ]);
+
+        //     foreach ($request->materias_claves as $claveMateria) {
+        //         GrupoMateria::create([
+        //             'ClaveGrupo' => $grupo->ClaveGrupo,
+        //             'ClaveMateria' => $claveMateria,
+        //             'CupoMaximo' => $request->CupoMaximo ?? 30,
+        //             'FechaInicio' => Carbon::now(),
+        //             'FechaFin' => Carbon::now()->addMonths(5),
+        //         ]);
+        //     }
+
+
+
     
-            return redirect()->route('admin.grupos.index')->with('success', 'Grupo creado exitosamente.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage())
-                ->withInput();
-        }
+        //     return redirect()->route('admin.grupos.index')->with('success', 'Grupo creado exitosamente.');
+        // } catch (\Exception $e) {
+        //     return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage())
+        //         ->withInput();
+        // }
+        $grupo = Grupo::create([
+            'Nombre' => $request->Nombre,
+            'Semestre' => $request->Semestre,
+            'ClaveCarrera' => $request->ClaveCarrera,
+        ]);
+        $grupo = Grupo::create($request->all());
+
+        return redirect()->route('admin.gruposmaterias.create', $grupo->ClaveGrupo);
     }
 
     /**
@@ -74,7 +97,7 @@ class GrupoController extends Controller
      */
     public function show(Grupo $grupo)
     {
-        $carreras = Carrera::pluck('Nombre', 'ClaveCarrera');
+        $carreras = Carrera::pluck('NombreCarrera', 'ClaveCarrera');
         $facultades = Facultad::pluck('NombreFacultad', 'ClaveFacultad');
         return view('admin.grupos.show', compact('grupo', 'carreras', 'facultades'));
     }
