@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\Permission\Models\Role;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +24,9 @@ Route::get('/test-auditoria-db', function () {
     }
 });
 
+Route::middleware(['role:profesor'])->get('/test-role', function () {
+    return 'Middleware role funcionando correctamente';
+});
 
 
 Route::get('/home-page', function () {

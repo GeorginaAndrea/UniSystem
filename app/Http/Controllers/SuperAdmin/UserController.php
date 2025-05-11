@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SuperAdmin;
 
-use App\Models\ProfesorGrupoMateria;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class ProfesorGrupoMateriaController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('super-admin.users.index');
     }
 
     /**
@@ -34,7 +35,7 @@ class ProfesorGrupoMateriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ProfesorGrupoMateria $profesorGrupoMateria)
+    public function show(string $id)
     {
         //
     }
@@ -42,15 +43,16 @@ class ProfesorGrupoMateriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProfesorGrupoMateria $profesorGrupoMateria)
+    public function edit($user)
     {
-        //
+        $user = User::find($user);
+        return view('super-admin.users.edit', compact('users'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProfesorGrupoMateria $profesorGrupoMateria)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +60,7 @@ class ProfesorGrupoMateriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProfesorGrupoMateria $profesorGrupoMateria)
+    public function destroy(string $id)
     {
         //
     }

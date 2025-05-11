@@ -11,17 +11,24 @@ class Materia extends Model
 
     protected $table = 'materia';
     protected $primaryKey = 'ClaveMateria';
+    protected $keyType = 'int';
     public $incrementing = true;
     protected $fillable = [
         'Nombre',
-        'descripcion'
+        'Descripcion',
+        'Semestre',
+        'ClaveCarrera'
     ];
     
 
         public function grupoMaterias()
     {
-        return $this->hasMany(GrupoMateria::class, 'ClaveMateria');
+        return $this->hasMany(GrupoMateria::class, 'ClaveMateria', 'ClaveMateria');
     }
 
+    public function carrera()
+    {
+        return $this->belongsTo(Carrera::class, 'ClaveCarrera', 'ClaveCarrera');
+    }
     
 }

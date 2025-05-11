@@ -29,7 +29,7 @@ class GrupoMateria extends Model
 
     public function materia()
     {
-        return $this->belongsTo(Materia::class, 'ClaveMateria');
+        return $this->belongsTo(Materia::class, 'ClaveMateria', 'ClaveMateria');
     }
     // public function profesor()
     // {

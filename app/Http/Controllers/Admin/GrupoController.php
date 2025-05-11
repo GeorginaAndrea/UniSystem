@@ -89,7 +89,9 @@ class GrupoController extends Controller
         ]);
         $grupo = Grupo::create($request->all());
 
-        return redirect()->route('admin.gruposmaterias.create', $grupo->ClaveGrupo);
+        return redirect()->route('admin.gruposmaterias.create', $grupo->id);
+
+        // return redirect()->route('admin.gruposmaterias.create', $grupo->ClaveGrupo);
     }
 
     /**

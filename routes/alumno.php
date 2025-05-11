@@ -5,7 +5,7 @@ use App\Http\Controllers\Alumno\HomeController;
 use App\Http\Controllers\Alumno\KardexController;
 use App\Http\Controllers\Alumno\MateriaController;
 
-    Route::get('/', [HomeController::class],'index')->name('alumno.home');
+    Route::get('/', [HomeController::class , 'index'])->name('alumno.home');
 
     Route::resource('kardex', KardexController::class)
         ->names('alumno.kardex')

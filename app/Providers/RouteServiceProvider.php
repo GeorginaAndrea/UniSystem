@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Spatie\Permission\Middlewares\RoleMiddleware;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -27,13 +28,25 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('super-admin')
                 ->group(base_path('routes/super-admin.php'));
 
-            Route::middleware('web','auth')
-                ->prefix('profesor')
-                ->group(base_path('routes/profesor.php'));
+            // Route::middleware('web','auth')
+            //     ->prefix('profesor')
+            //     ->group(base_path('routes/profesor.php'));
                 
             Route::middleware('web','auth')
                 ->prefix('alumno')
                 ->group(base_path('routes/alumno.php'));
+
+            // Route::middleware(['web', 'auth', 'role:profesor'])
+            // ->prefix('profesor')
+            // ->name('profesor.')
+            // ->group(base_path('routes/profesor.php'));
+
+            Route::middleware(['web', 'auth', 'role:profesor'])
+            ->prefix('profesor')
+            ->name('profesor.')
+            ->group(base_path('routes/profesor.php'));
+
+            
         });
     }
 }

@@ -30,7 +30,8 @@ class Alumno extends Model
         'FechaNacimiento',
         'FechaIngreso',
         
-        'ClaveCarrera' 
+        'ClaveCarrera',
+        'user_id'
     ];
     public $incrementing = false;
     

@@ -54,6 +54,10 @@ use App\Http\Controllers\Admin\ProfesorGrupoMateriaController;
         ->names('admin.kardexs')
         ->parameters(['kardex' => 'kardex']);
 
+     Route::get('grupos/{grupo}/gruposmaterias/create', [GrupoMateriaController::class, 'create'])
+        ->name('admin.gruposmaterias.create');
+    
+
     Route::get('admin/grupos/{grupo}/profesores', [ProfesorGrupoMateriaController::class, 'index'])->name('admin.profesorgrupomateria.index');
     Route::post('admin/grupos/{grupo}/profesores', [ProfesorGrupoMateriaController::class, 'store'])->name('admin.profesorgrupomateria.store');
 // Route::get('/',function(){

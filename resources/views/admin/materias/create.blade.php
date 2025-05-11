@@ -36,9 +36,29 @@
             </div>
   
           </div>
+
+
           <div class="col-md-6">
   
+            <div class="form-group">
+              <label for="Semestre">Semestre</label>
+              <input type="number" name="Semestre" class="form-control" placeholder="Ingrese el semestre de la materia">
+            </div>
+  
+            <div class="mb-3">
+              <label for="ClaveCarrera">Carrera:</label>
+              <select name="ClaveCarrera" class="form-control" required>
+                  @foreach ($carreras as $carrera)
+                      <option value="{{ $carrera->ClaveCarrera }}">{{ $carrera->NombreCarrera }}</option>
+                  @endforeach
+              </select>
+            </div>
+  
+          </div>
+  
         </div>
+
+        
   
       </div>
   

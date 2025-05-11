@@ -73,5 +73,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return url('user/profile');
     }
 
+        public function profesor()
+    {
+        return $this->hasOne(Profesor::class, 'user_id');
+    }
+
 
 }

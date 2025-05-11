@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Materia;
 use Illuminate\Http\Request;
+use App\Models\Carrera;
+use App\Models\Audit\LogCambio;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class MateriaController extends Controller
 {
@@ -13,7 +17,12 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        $materias = Materia::orderBy('ClaveMateria','asc')->paginate(10);
+        // $materias = Materia::orderBy('ClaveMateria','asc')->paginate(10);
+        // return view('admin.materias.index', compact('materias'));
+        $materias = Materia::with('carrera')->get()->groupBy(function($materia) {
+            return $materia->carrera->NombreCarrera ?? 'Sin carrera';
+        });
+    
         return view('admin.materias.index', compact('materias'));
     }
 
@@ -22,7 +31,8 @@ class MateriaController extends Controller
      */
     public function create()
     {
-        return view('admin.materias.create');
+        $carreras = Carrera::all();
+        return view('admin.materias.create', compact('carreras'));
     }
 
     /**
@@ -30,8 +40,41 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'Nombre' => 'required|string|max:100',
+            'Descripcion' => 'required|string|max:250',
+            'Semestre' => 'required|integer|min:1|max:12',
+            'ClaveCarrera' => 'required|integer|exists:carrera,ClaveCarrera',
+        ]);
+
+        try {
+            $materia = Materia::create($validatedData);
+
+            $datos_nuevos = $materia->toArray();
+            try {
+                $log_cambiomateria = LogCambio::create([
+                    'usuario_id' => Auth::id(),
+                    'tabla_afectada' => 'materia',
+                    'tipo_cambio' => 'INSERT',
+                    'llave_primaria' => $materia->ClaveMateria,
+                    'descripcion' => 'Se registró una nueva materia con clave: ' . $materia->ClaveMateria,
+                    'datos_nuevos' => json_encode($datos_nuevos),
+                     // o $user->id si aplica
+                    'fecha_cambio' => now(),
+                ]);
+            } catch (\Exception $e) {
+                dd('Error alguardar en log_cambios: ' . $e->getMessage());
+            }
+
+
+            return redirect()->route('admin.materias.index')
+                            ->with('success', 'Materia creada exitosamente.');
+        } catch (\Throwable $th) {
+            return back()->withErrors(['error' => 'Error al crear la materia.'])
+                        ->withInput();
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -44,9 +87,11 @@ class MateriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Materia $materia)
+    public function edit($materia)
     {
-        return view('admin.kardexs.edit', compact('materia'));
+        $carreras = Carrera::all();
+        $materia = Materia::find($materia);
+        return view('admin.materias.edit', compact('materia', 'carreras'));
     }
 
     /**
@@ -54,7 +99,33 @@ class MateriaController extends Controller
      */
     public function update(Request $request, Materia $materia)
     {
-        //
+        $validatedData = $request->validate([
+            'Nombre' => 'sometimes|string|max:100',
+            'Descripcion' => 'sometimes|string|max:250',
+            'Semestre' => 'sometimes|integer|min:1|max:12',
+            'ClaveCarrera' => 'sometimes|integer|exists:carrera,ClaveCarrera',
+        ]);
+        $datos_anteriores = $materia->toArray();
+    
+        $materia->update($validatedData);
+        
+        $datos_nuevos = $materia->fresh()->toArray();
+
+        $ip_local = $request->ip();
+
+        LogCambio::create([
+            'usuario_id' => Auth::id(),
+            'tabla_afectada' => 'materia',
+            'tipo_cambio' => 'UPDATE',
+            'llave_primaria' => $materia->ClaveMateria,
+            'datos_anteriores' => json_encode($datos_anteriores),
+            'datos_nuevos' => json_encode($datos_nuevos),
+            'ip_local' => $ip_local,
+            // 'ip_gateway' => $ip_gateway,
+            // 'mac_address' => $mac_address,
+        ]);
+
+        return redirect()->route('admin.materias.index', $materia)->with('success', 'Datos actualizados exitosamente.'); 
     }
 
     /**

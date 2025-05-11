@@ -397,16 +397,26 @@ return [
             
         ],
         [
+        
+            'text' => 'Usuarios',
+            'route' => 'super-admin.users.index',
+            'icon' => 'fas fa-users fa-fw',
+                // 'can' => 'super-admin.auditoria.historial.index'
+            
+        ],
+        [
             'text' => 'Auditoría y Seguridad',
             'icon' => 'fas fa-shield-alt',
             'can' => 'super-admin.home',
             'submenu' => [
+                
                 [
                     'text' => 'Historial de Actividades',
                     'route' => 'super-admin.auditoria.historial.index',
                     'icon' => 'fas fa-history',
                     'can' => 'super-admin.auditoria.historial.index'
                 ],
+                
                 [
                     'text' => 'Dispositivos Registrados',
                     // 'route' => 'admin.auditoria.dispositivos',
@@ -437,13 +447,25 @@ return [
             ],
         ],
         [
+            'text' => 'Grupos',
+            'icon' => 'fas fa-user-graduate',
+            'can' => 'profesor.home',
+            'submenu' => [
+                [
+                    'text' => 'Lista de Grupos',
+                    'route' => 'profesor.grupos.index',
+                    'icon' => 'fas fa-users'
+                ],
+            ],
+        ],
+        [
             'text' => 'Alumnos',
             'icon' => 'fas fa-user-graduate',
             'can' => 'profesor',
             'submenu' => [
                 [
                     'text' => 'Lista de Alumnos por Grupo',
-                    'route' => 'profesor.alumnos.index',
+                    // 'route' => 'profesor.alumnos.index',
                     'icon' => 'fas fa-users'
                 ],
             ],
@@ -454,7 +476,8 @@ return [
         [
             'text' => 'Mi Información',
             'icon' => 'fas fa-user',
-            'can' => 'alumnos.home',
+            'can' => 'alumno.home',
+            // 'route' => 'alumno.home',
             'submenu' => [
                 [
                     'text' => 'Información Personal',
@@ -471,6 +494,7 @@ return [
                 [
                     'text' => 'Calificaciones por Materia',
                     'route' => 'alumno.materias.index',
+                    'can' => 'alumno.materias.index',
                     'icon' => 'fas fa-star'
                 ],
                 [

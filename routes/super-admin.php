@@ -6,11 +6,17 @@ use App\Http\Controllers\SuperAdmin\LogCambios;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SuperAdmin\Auditoria\HistorialController;
+use App\Http\Controllers\SuperAdmin\UserController;
+use App\Models\User;
+
+Route::get('/',[HomeController::class, 'index'])->name('super-admin.home');
 
 Route::prefix('auditoria/historial')->name('super-admin.auditoria.historial.')->group(function(){
     Route::get('/',[LogCambios::class, 'index'])->name('index');
     Route::get('{id}',[LogCambios::class, 'show'])->name('show');
 });
+
+Route::resource('users', UserController::class)->names('super-admin.users');
 // Route::resource('auditoria', LogCambios::class)
 //     ->names('super-admin.auditoria')
 //     ->parameters(['auditoria' => 'auditoria']);

@@ -34,4 +34,6 @@ class Carrera extends Model
         return $this->hasMany(Alumno::class, 'ClaveCarrera');
     }
 
+    
+
 }

@@ -69,15 +69,18 @@ class RoleSeeder extends Seeder
 
         ],
         'alumno' => [
-            'alumnos.home',
-            'alumnos.kardex',
+            'alumno.home',
+            'alumno.kardex',
+            'alumno.materias.index',
         ],
         'profesor' => [
             'profesor.home',
             'profesor.show',
             'profesor.alumnos.index',
-            'profesor.alumnos.edit',
+            // 'profesor.alumnos.edit',
             'profesor.materias.index',
+            'profesor.asistencias.create',
+            'profesor.calificaciones.edit',
         ],
     ];
 

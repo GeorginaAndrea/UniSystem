@@ -17,6 +17,7 @@ class Kardex extends Model
         'ClaveGrupoMateria',
         'ClaveAlumno',
         'Calificacion',
+        'Faltas'
         
     ];
     // public $incrementing = false;

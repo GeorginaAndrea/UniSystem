@@ -24,12 +24,12 @@ class Grupo extends Model
 
     public function carrera()
     {
-        return $this->belongsTo(Carrera::class, 'ClaveCarrera');
+        return $this->belongsTo(Carrera::class, 'ClaveCarrera', 'ClaveCarrera');
     }
 
     public function facultad()
     {
-        return $this->belongsTo(Facultad::class, 'ClaveFacultad');
+        return $this->belongsTo(Facultad::class, 'ClaveFacultad', 'ClaveFacultad');
     }
 
     public function grupoMaterias()

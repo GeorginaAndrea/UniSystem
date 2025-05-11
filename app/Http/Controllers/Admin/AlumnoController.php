@@ -79,7 +79,7 @@ class AlumnoController extends Controller
                 'ClaveAlumno' => $claveAlumno,
                 'FechaIngreso' => now()
             ], $validatedData));
-            
+            $datos_nuevos = $alumno->toArray();
             // Alumno::create(array_merge(['ClaveAlumno', 'fechaIngreso' => $claveAlumno, now()], $validatedData));
 
             try {
@@ -89,6 +89,7 @@ class AlumnoController extends Controller
                     'tipo_cambio' => 'INSERT',
                     'llave_primaria' => $alumno->ClaveAlumno,
                     'descripcion' => 'Se registró un nuevo alumno con ClaveAlumno: ' . $claveAlumno,
+                    'datos_nuevos' => json_encode($datos_nuevos),
                      // o $user->id si aplica
                     'fecha_cambio' => now(),
                 ]);

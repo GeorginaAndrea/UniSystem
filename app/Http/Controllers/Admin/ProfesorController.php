@@ -66,8 +66,10 @@ class ProfesorController extends Controller
                 'Email' => $validatedData['Email'],
                 'Telefono' => $validatedData['Telefono'],
                 'ClaveFacultad' => $validatedData['ClaveFacultad'],
+                'user_id' => $user->id
             ]);
 
+            $datos_nuevos = $profesor->toArray();
             /*/
             $log_cambiomaestro = LogCambio::create([
                 'tabla_afectada' => 'profesor',
@@ -82,6 +84,7 @@ class ProfesorController extends Controller
                     'tabla_afectada' => 'profesores',
                     'tipo_cambio' => 'INSERT',
                     'llave_primaria' => $profesor->ClaveProfesor,
+                    'datos_nuevos' => json_encode($datos_nuevos),
                     
                     //'datos_anteriores' => json_encode($datos_anteriores),
                     //'datos_nuevos' => json_encode($datos_nuevos),

@@ -20,7 +20,8 @@ class Profesor extends Model
         'Email',
         'Telefono',
         'ClaveFacultad',
-        'Departamento'
+        'Departamento',
+        'user_id'
     ];
     public $incrementing = false;
     
@@ -35,14 +36,21 @@ class Profesor extends Model
         return $this->hasMany(Grupo::class, 'ClaveProfesor');
     }
 
-    public function materias()
+    public function grupoMaterias()
     {
-        return $this->belongsToMany(Materia::class, 'profesor_materia', 'ClaveProfesor', 'ClaveMateria');
+        return $this->belongsToMany(GrupoMateria::class, 'profesor_grupomateria', 'ClaveProfesor', 'ClaveGrupoMateria');
     }
 
+    public function materias()
+    {
+        return $this->grupoMaterias->map(function ($grupoMateria) {
+            return $grupoMateria->materia;
+        });
+    }
+    
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 

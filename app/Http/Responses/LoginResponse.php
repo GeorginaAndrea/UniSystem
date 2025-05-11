@@ -23,7 +23,7 @@ class LoginResponse implements LoginResponseContract
         }
 
         if ($user->hasRole('alumno')) {
-            return redirect()->route('alumnos.home');
+            return redirect()->route('alumno.home');
         }
 
         if ($user->hasRole('profesor')) {
