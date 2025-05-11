@@ -26,6 +26,7 @@ class GrupoController extends Controller
         return view('profesor.grupos.index', compact('relaciones'));
     }
 
+
     public function verAlumnos($grupoId)
     {
         $grupo = Grupo::with('grupoMaterias.kardex.alumno')->findOrFail($grupoId);
@@ -38,13 +39,19 @@ class GrupoController extends Controller
         return view('profesor.grupos.alumnos', compact('grupo', 'alumnos'));
     }
 
+
         public function alumnos($claveGrupoMateria)
     {
         $grupoMateria = GrupoMateria::with('grupo', 'materia')->findOrFail($claveGrupoMateria);
 
-        $alumnos = Alumno::whereHas('kardex', function ($query) use ($claveGrupoMateria) {
+       $alumnos = Alumno::whereHas('kardex', function ($query) use ($claveGrupoMateria) {
             $query->where('ClaveGrupoMateria', $claveGrupoMateria);
-        })->with('carrera')->get();
+        })->with([
+            'carrera',
+            'kardex' => function ($query) use ($claveGrupoMateria) {
+                $query->where('ClaveGrupoMateria', $claveGrupoMateria);
+            }
+        ])->get();
 
         return view('profesor.grupos.alumnos', compact('grupoMateria', 'alumnos'));
     }

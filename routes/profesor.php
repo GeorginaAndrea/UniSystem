@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Route;
         ->names('grupos')
         ->parameters(['grupos' => 'grupo']);
 
+    Route::get('grupos/{grupo}/alumnos', [GrupoController::class, 'verAlumnos'])
+    ->name('grupos.alumnos');
+
     Route::resource('materias', MateriaController::class)
         ->names('materias')
         ->parameters(['materias' => 'materia']);

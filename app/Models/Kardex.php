@@ -25,12 +25,12 @@ class Kardex extends Model
 
     public function grupoMateria()
     {
-        return $this->belongsTo(GrupoMateria::class, 'ClaveGrupoMateria');
+        return $this->belongsTo(GrupoMateria::class, 'ClaveGrupoMateria', 'ClaveGrupoMateria');
     }
 
     public function alumno()
     {
-        return $this->belongsTo(Alumno::class, 'ClaveAlumno');
+        return $this->belongsTo(Alumno::class, 'ClaveAlumno', 'ClaveAlumno');
     }
 
     

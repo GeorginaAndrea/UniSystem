@@ -28,9 +28,9 @@
                             <td>{{ $relacion->grupoMateria->materia->Nombre ?? 'N/A' }}</td>
                             <td>{{ $relacion->grupoMateria->CupoMaximo ?? 'N/A' }}</td>
                             <td>
-                                {{-- <a href="{{ route('profesor.grupos.alumnos', $relacion->grupoMateria->grupo->ClaveGrupo) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('profesor.grupos.alumnos', $relacion->grupoMateria->grupo->ClaveGrupo) }}" class="btn btn-sm btn-primary">
                                     Ver alumnos
-                                </a> --}}
+                                </a>
                             </td>
                         </tr>
                         @empty

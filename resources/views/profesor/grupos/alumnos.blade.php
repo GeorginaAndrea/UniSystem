@@ -17,6 +17,9 @@
                     <th>Nombre completo</th>
                     <th>Email</th>
                     <th>Carrera</th>
+                    <th>Faltas</th>
+                    <th>Calificacion</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +29,23 @@
                         <td>{{ $alumno->ApePaterno }} {{ $alumno->ApeMaterno }} {{ $alumno->Nombres }}</td>
                         <td>{{ $alumno->Email }}</td>
                         <td>{{ $alumno->carrera->NombreCarrera ?? 'No registrada' }}</td>
+                        @php
+                            $registro = $alumno->kardex->first(); // Ya está filtrado por GrupoMateria
+                        @endphp
+
+                        <td>
+                            {{ $registro->Calificacion ?? 'Sin calificación' }}
+                        </td>
+                        <td>
+                            {{ $registro->Faltas ?? 'Sin faltas' }}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalEditar{{ $alumno->ClaveAlumno }}">
+                                Registrar
+                            </button>
+                        </td>
                     </tr>
                 @empty
                     <tr>

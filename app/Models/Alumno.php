@@ -48,11 +48,17 @@ class Alumno extends Model
 
     public function kardex()
     {
-        return $this->hasMany(Kardex::class, 'ClaveAlumno');
+        return $this->hasMany(Kardex::class, 'ClaveAlumno','ClaveAlumno');
     }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function kardexPorGrupoMateria($claveGrupoMateria)
+    {
+        return $this->kardex->where('ClaveGrupoMateria', $claveGrupoMateria)->first();
+    }
+
 
 }
