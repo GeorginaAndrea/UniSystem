@@ -27,6 +27,8 @@ class RoleSeeder extends Seeder
             'super-admin.home',
             'super-admin.auditoria.historial.index',
             'super-admin.auditoria.historial.show',
+            'super-admin.auditoria.dispositivos.index',
+            'super-admin.auditoria.sesiones.index',
             'super-admin.admin.index',
             'super-admin.admin.create',
             'super-admin.admin.edit',

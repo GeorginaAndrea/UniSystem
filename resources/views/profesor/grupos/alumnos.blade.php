@@ -17,8 +17,8 @@
                     <th>Nombre completo</th>
                     <th>Email</th>
                     <th>Carrera</th>
-                    <th>Faltas</th>
                     <th>Calificacion</th>
+                    <th>Faltas</th>
                     <th>Acciones</th>
                 </tr>
             </thead>

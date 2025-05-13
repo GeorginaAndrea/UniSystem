@@ -3,6 +3,7 @@
 namespace App\Models\Audit;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Dispositivo extends Model
 {
@@ -20,4 +21,9 @@ class Dispositivo extends Model
         'fecha_registro'
 
     ];
+
+     public function usuario()
+    {
+        return (new User)->setConnection('mysql')->belongsTo(User::class, 'usuario_id');
+    }
 }

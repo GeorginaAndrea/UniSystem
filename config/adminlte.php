@@ -419,15 +419,15 @@ return [
                 
                 [
                     'text' => 'Dispositivos Registrados',
-                    // 'route' => 'admin.auditoria.dispositivos',
+                    'route' => 'super-admin.auditoria.dispositivos.index',
                     'icon' => 'fas fa-laptop',
-                    // 'can' => 'super-admin.home'
+                    'can' => 'super-admin.auditoria.dispositivos.index'
                 ],
                 [
                     'text' => 'Sesiones Activas',
-                    // 'route' => 'admin.auditoria.sesiones',
+                    'route' => 'super-admin.auditoria.sesiones.index',
                     'icon' => 'fas fa-user-clock',
-                    // 'can' => 'super-admin.home'
+                    'can' => 'super-admin.auditoria.sesiones.index'
                 ],
             ],
         ],

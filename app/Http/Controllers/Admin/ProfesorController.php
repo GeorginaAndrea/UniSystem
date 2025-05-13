@@ -123,54 +123,7 @@ class ProfesorController extends Controller
         return view('admin.profesores.edit', compact('profesor',  'facultades'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, Profesor $profesor)
-    // {
-    //     $validatedData = $request->validate([
-    //         'ApePaterno' => 'sometimes|string|max:40',
-    //         'ApeMaterno' => 'sometimes|string|max:40',
-    //         'Nombres' => 'sometimes|string|max:50',
-    //         'Email' => 'sometimes|email|max:50',
-    //         'Telefono' => 'sometimes|string|size:10'
-    //     ]);
-
-    //     $profesor = Profesor::findOrFail();
-
-    //     try {
-    //         $datos_anteriores = $profesor->toArray();
-
-    //         $profesor->ApePaterno = $request->ApePaterno;
-    //         $profesor->ApeMaterno = $request->ApeMaterno;
-    //         $profesor->Nombres = $request->Nombres;
-    //         $profesor->Email = $request->Email;
-    //         $profesor->Telefono = $request->Telefono;
-
-    //     $datos_nuevos = $profesor->fresh()->toArray();
-
-    //     $ip_local = $request->ip();
-
-    //     LogCambio::create([
-    //         'usuario_id' => Auth::id(),
-    //         'tabla_afectada' => 'profesores',
-    //         'tipo_cambio' => 'UPDATE',
-    //         'llave_primaria' => $profesor->ClaveProfesor,
-    //         'datos_anteriores' => json_encode($datos_anteriores),
-    //         'datos_nuevos' => json_encode($datos_nuevos),
-    //         // 'ip_local' => $ip_local,
-    //     ]); 
-    //     return redirect()->route('admin.profesores.index')->with('success', 'Profesor actualizado correctamente.');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'Ocurrió un error al actualizar el libro: ' . $e->getMessage());
-    //     }
-
-        
-
-        
-
-    // }
-
+    
     public function update(Request $request, Profesor $profesor)
     {
         $validatedData = $request->validate([
