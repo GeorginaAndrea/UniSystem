@@ -22,7 +22,7 @@
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Rol</th>
-                        <th>Permisos</th>
+                        
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -39,9 +39,9 @@
                                     <span class="badge badge-secondary">Sin rol</span>
                                 @endif
                             </td>
-                            <td>
+                            {{-- <td>
                                 <span class="badge badge-warning">{{ $user->permissions->count() }} permisos</span>
-                            </td>
+                            </td> --}}
                             <td>
                                 <button class="btn btn-sm btn-outline-primary"
                                         wire:click="openPermissionsModal({{ $user->id }})">

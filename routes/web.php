@@ -15,6 +15,12 @@ Route::get('/prueba', function () {
 
 
 
+Route::get('/user/force-password-change', function () {
+    return view('auth.force-password-change');
+})->middleware(['auth'])->name('password.force');
+
+
+
 Route::get('/test-auditoria-db', function () {
     try {
         $result = DB::connection('auditoria')->select('SELECT 1 as test');

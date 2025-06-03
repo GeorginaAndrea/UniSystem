@@ -60,6 +60,3 @@ use App\Http\Controllers\Admin\ProfesorGrupoMateriaController;
 
     Route::get('admin/grupos/{grupo}/profesores', [ProfesorGrupoMateriaController::class, 'index'])->name('admin.profesorgrupomateria.index');
     Route::post('admin/grupos/{grupo}/profesores', [ProfesorGrupoMateriaController::class, 'store'])->name('admin.profesorgrupomateria.store');
-// Route::get('/',function(){
-//     return "cdcsdhlshd";
-// });

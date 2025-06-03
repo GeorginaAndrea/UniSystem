@@ -77,7 +77,8 @@ class AlumnoController extends Controller
             $claveAlumno = 'ALU' . strtoupper(Str::random(8));
             $alumno = Alumno::create(array_merge([
                 'ClaveAlumno' => $claveAlumno,
-                'FechaIngreso' => now()
+                'FechaIngreso' => now(),
+                'user_id' => $user->id
             ], $validatedData));
             $datos_nuevos = $alumno->toArray();
             // Alumno::create(array_merge(['ClaveAlumno', 'fechaIngreso' => $claveAlumno, now()], $validatedData));

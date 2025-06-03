@@ -37,4 +37,10 @@ class Grupo extends Model
         return $this->hasMany(GrupoMateria::class, 'ClaveGrupo');
     }
 
+        public function profesor()
+    {
+        return $this->belongsTo(Profesor::class, 'ClaveProfesor');
+    }
+
+
 }

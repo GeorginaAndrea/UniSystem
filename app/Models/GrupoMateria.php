@@ -24,7 +24,7 @@ class GrupoMateria extends Model
 
     public function grupo()
     {
-        return $this->belongsTo(Grupo::class, 'ClaveGrupo');
+        return $this->belongsTo(Grupo::class, 'ClaveGrupo', 'ClaveGrupo');
     }
 
     public function materia()

@@ -24,4 +24,5 @@ class LogCambio extends Model
         'mac_address',
         'fecha',
     ];
+
 }

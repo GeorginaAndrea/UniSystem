@@ -401,7 +401,7 @@ return [
             'text' => 'Usuarios',
             'route' => 'super-admin.users.index',
             'icon' => 'fas fa-users fa-fw',
-                // 'can' => 'super-admin.auditoria.historial.index'
+            'can' => 'super-admin.users.index'
             
         ],
         [
@@ -477,7 +477,7 @@ return [
             'text' => 'Mi Información',
             'icon' => 'fas fa-user',
             'can' => 'alumno.home',
-            // 'route' => 'alumno.home',
+            'route' => 'alumno.home',
             'submenu' => [
                 [
                     'text' => 'Información Personal',

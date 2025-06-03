@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/',[HomeController::class, 'index'])->name('home');
 
-    Route::get('/dashboard', function () {
-    return 'Bienvenido, profesor';
-    })->name('home');
+    // Route::get('/dashboard', function () {
+    // return 'Bienvenido, profesor';
+    // })->name('home');
 
     Route::resource('alumnos', 
     AlumnoController::class)

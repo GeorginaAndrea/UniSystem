@@ -20,15 +20,15 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web', 'auth')
+            Route::middleware(['web', 'auth', 'role:admin'])
                 ->prefix('admin')
                 ->group(base_path('routes/admin.php'));
 
-            Route::middleware('web','auth')
+            Route::middleware(['web', 'auth', 'role:super-admin'])
                 ->prefix('super-admin')
                 ->group(base_path('routes/super-admin.php'));
 
-            Route::middleware('web','auth')
+            Route::middleware(['web', 'auth', 'role:alumno'])
                 ->prefix('alumno')
                 ->group(base_path('routes/alumno.php'));
 

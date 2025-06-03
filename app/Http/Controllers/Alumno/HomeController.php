@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Alumno;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -12,7 +13,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('alumno.home');
+         $user = Auth::user();
+
+        // Obtener el modelo Profesor relacionado
+        $alumno = $user->alumno;
+
+        // Validar que sí existe el modelo Profesor
+        if (!$alumno) {
+            abort(403, 'No se encontró el profesor asociado.');
+        }
+        return view('alumno.home', compact('alumno'));
     }
 
     /**

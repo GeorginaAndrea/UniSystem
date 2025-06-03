@@ -23,6 +23,9 @@ class UsersIndex extends Component
     public $pendingAction;
     public $pendingPermissionName;
 
+    public $userIdToModify;
+    public $permissionToRemove;
+
     protected $paginationTheme = 'bootstrap';
 
     public function render()

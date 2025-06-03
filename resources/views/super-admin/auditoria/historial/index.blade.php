@@ -29,6 +29,7 @@
                             <td>{{ $log->usuario_id }}</td>
                             <td>{{ $log->tabla_afectada }}</td>
                             <td>{{ $log->tipo_cambio }}</td>
+                            
                             <td>
                                 <a class="btn btn-primary" href="{{ route ('super-admin.auditoria.historial.show', $log->id) }}">Ver</a>
                             </td>

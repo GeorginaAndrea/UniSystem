@@ -9,9 +9,12 @@ use App\Models\ProfesorGrupoMateria;
 use App\Models\Grupo;
 use App\Models\GrupoMateria;
 use App\Models\Alumno;
+use App\Policies\GrupoPolicy;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class GrupoController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -29,6 +32,19 @@ class GrupoController extends Controller
 
     public function verAlumnos($grupoId)
     {
+
+        $profesorId = Auth::user()->profesor->ClaveProfesor;
+
+        // Verificamos si este profesor tiene al menos una asignación con el grupo dado
+        $tieneAcceso = ProfesorGrupoMateria::where('ClaveProfesor', $profesorId)
+            ->whereHas('grupoMateria', function ($query) use ($grupoId) {
+                $query->where('ClaveGrupo', $grupoId);
+            })->exists();
+
+        if (!$tieneAcceso) {
+            abort(403, 'No tienes permiso para ver los alumnos de este grupo.');
+        }
+
         $grupo = Grupo::with('grupoMaterias.kardex.alumno')->findOrFail($grupoId);
 
         // Obtener alumnos desde el kardex de cada grupo_materia

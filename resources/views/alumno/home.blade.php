@@ -3,18 +3,31 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Bienvenido de vuelta, {{ $alumno->Nombres }}</h1>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
-@stop
+    <div class="row justify-content-center">
+        <div class="col-md-8">
 
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@stop
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Tus Datos</h3>
+                </div>
 
-@section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+                <div class="card-body">
+                    <p><strong>Clave Alumno:</strong> {{ $alumno->ClaveAlumno }}</p>
+                    <p><strong>Nombre:</strong> {{ $alumno->Nombres }} {{ $alumno->ApePaterno }} {{ $alumno->ApeMaterno }}</p>
+                    <p><strong>Correo Electrónico:</strong> {{ $alumno->Email }}</p>
+                    <p><strong>Teléfono:</strong> {{ $alumno->Telefono }}</p>
+                    <p><strong>Curp:</strong> {{ $alumno->Curp }}</p>
+                    <p><strong>Carrera:</strong> {{ optional($alumno->carrera)->NombreCarrera ?? 'No asignada' }}</p>
+                </div>
+
+                
+            </div>
+
+        </div>
+    </div>
+    
 @stop
